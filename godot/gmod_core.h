@@ -35,7 +35,7 @@ extern "C"
 
 void hello();
 double ** return_face_trackers();
-int start(std::string graph_name);
+int start(const char* graph_name);
 void stop();
 
 #ifdef __cplusplus

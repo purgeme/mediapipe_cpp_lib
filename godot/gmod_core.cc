@@ -205,7 +205,8 @@ void stop(){
   grab_frames = false;
 }
 
-int start(std::string filename){
+int start(const char* filename){
+  LOG(INFO) << "Running the graph";
   graph_name = filename;
   absl::Status run_status = RunMPPGraph();
   if (!run_status.ok()) {
