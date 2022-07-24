@@ -1,0 +1,203 @@
+From b81d1bf7778e03780703ffec804853350084bfe0 Mon Sep 17 00:00:00 2001
+From: purg3me <jostaboi@protonmail.com>
+Date: Mon, 25 Jul 2022 02:24:22 +0530
+Subject: [PATCH] mediapipe_module
+
+---
+ .../holistic_tracking/holistic_tracking_cpu.pbtxt   | 13 +++++++++++++
+ .../face_detection/face_detection_full_range.pbtxt  |  2 +-
+ .../face_detection/face_detection_short_range.pbtxt |  2 +-
+ .../holistic_landmark/hand_recrop_by_roi_cpu.pbtxt  |  2 +-
+ .../holistic_landmark/hand_recrop_by_roi_gpu.pbtxt  |  2 +-
+ .../modules/iris_landmark/iris_landmark_cpu.pbtxt   |  2 +-
+ .../modules/iris_landmark/iris_landmark_gpu.pbtxt   |  2 +-
+ .../objectron/object_detection_oid_v4_cpu.pbtxt     |  2 +-
+ .../objectron/object_detection_oid_v4_gpu.pbtxt     |  2 +-
+ .../modules/pose_detection/pose_detection_cpu.pbtxt |  2 +-
+ .../modules/pose_detection/pose_detection_gpu.pbtxt |  2 +-
+ third_party/opencv_linux.BUILD                      |  4 ++--
+ 12 files changed, 25 insertions(+), 12 deletions(-)
+
+diff --git a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
+index fead245..ea2cca3 100644
+--- a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
++++ b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
+@@ -6,6 +6,12 @@ input_stream: "input_video"
+ # CPU image with rendered results. (ImageFrame)
+ output_stream: "output_video"
+ 
++# The face landmarks (std::vector<NormalizedLandmarkList>)
++# output_stream: "FACE_LANDMARKS:face_landmarks"
++output_stream: "face_landmarks"
++
++output_stream: "landmark_presence"
++
+ # Throttles the images flowing downstream for flow control. It passes through
+ # the very first incoming image unaltered, and waits for downstream nodes
+ # (calculators and subgraphs) in the graph to finish their tasks before it
+@@ -73,3 +79,10 @@ node {
+   input_stream: "VECTOR:render_data_vector"
+   output_stream: "IMAGE:output_video"
+ }
++
++# Custom graph node to check if packet is present or not
++node {
++  calculator: "PacketPresenceCalculator"
++  input_stream: "PACKET:face_landmarks"
++  output_stream: "PRESENCE:landmark_presence"
++}
+\ No newline at end of file
+diff --git a/mediapipe/modules/face_detection/face_detection_full_range.pbtxt b/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
+index b526b67..261caf7 100644
+--- a/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
++++ b/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
+@@ -34,7 +34,7 @@ node {
+   output_stream: "DETECTIONS:detections"
+   node_options: {
+     [type.googleapis.com/mediapipe.FaceDetectionOptions] {
+-      model_path: "mediapipe/modules/face_detection/face_detection_full_range_sparse.tflite"
++      model_path: "../mediapipe/modules/face_detection/face_detection_full_range_sparse.tflite"
+       tensor_width: 192
+       tensor_height: 192
+ 
+diff --git a/mediapipe/modules/face_detection/face_detection_short_range.pbtxt b/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
+index eb9ed32..3da3e13 100644
+--- a/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
++++ b/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
+@@ -34,7 +34,7 @@ node {
+   output_stream: "DETECTIONS:detections"
+   node_options: {
+     [type.googleapis.com/mediapipe.FaceDetectionOptions] {
+-      model_path: "mediapipe/modules/face_detection/face_detection_short_range.tflite"
++      model_path: "../mediapipe/modules/face_detection/face_detection_short_range.tflite"
+       tensor_width: 128
+       tensor_height: 128
+ 
+diff --git a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
+index 75141d2..77866f1 100644
+--- a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
++++ b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
+@@ -42,7 +42,7 @@ node {
+   output_stream: "TENSORS:landmark_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/holistic_landmark/hand_recrop.tflite"
++      model_path: "../mediapipe/modules/holistic_landmark/hand_recrop.tflite"
+       delegate { xnnpack {} }
+     }
+   }
+diff --git a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
+index 4fa8f29..b81ed3e 100644
+--- a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
++++ b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
+@@ -42,7 +42,7 @@ node {
+   output_stream: "TENSORS:landmark_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/holistic_landmark/hand_recrop.tflite"
++      model_path: "../mediapipe/modules/holistic_landmark/hand_recrop.tflite"
+     }
+   }
+ }
+diff --git a/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt b/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
+index f2c4b04..ea2aca4 100644
+--- a/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
++++ b/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
+@@ -81,7 +81,7 @@ node {
+   output_stream: "TENSORS:output_tensors"
+   options: {
+     [mediapipe.TfLiteInferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/iris_landmark/iris_landmark.tflite"
++      model_path: "../mediapipe/modules/iris_landmark/iris_landmark.tflite"
+       delegate { xnnpack {} }
+     }
+   }
+diff --git a/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt b/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
+index 9fb7898..c1c86e1 100644
+--- a/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
++++ b/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
+@@ -88,7 +88,7 @@ node {
+   output_stream: "TENSORS:output_tensors"
+   options: {
+     [mediapipe.TfLiteInferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/iris_landmark/iris_landmark.tflite"
++      model_path: "../mediapipe/modules/iris_landmark/iris_landmark.tflite"
+     }
+   }
+ }
+diff --git a/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt b/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
+index f7a09fc..67d8de7 100644
+--- a/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
++++ b/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
+@@ -35,7 +35,7 @@ node {
+   output_stream: "TENSORS:detection_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
++      model_path: "../mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
+       delegate { xnnpack {} }
+     }
+   }
+diff --git a/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt b/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
+index 7873e80..6a96317 100644
+--- a/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
++++ b/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
+@@ -37,7 +37,7 @@ node {
+   output_stream: "TENSORS:detection_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
++      model_path: "../mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
+       delegate { gpu {} }
+     }
+   }
+diff --git a/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt b/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
+index 79ee1ac..b341dac 100644
+--- a/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
++++ b/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
+@@ -71,7 +71,7 @@ node {
+   output_stream: "TENSORS:detection_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/pose_detection/pose_detection.tflite"
++      model_path: "../mediapipe/modules/pose_detection/pose_detection.tflite"
+       delegate {
+         xnnpack {}
+       }
+diff --git a/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt b/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
+index b95a117..d6a327a 100644
+--- a/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
++++ b/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
+@@ -68,7 +68,7 @@ node {
+   output_stream: "TENSORS:detection_tensors"
+   options: {
+     [mediapipe.InferenceCalculatorOptions.ext] {
+-      model_path: "mediapipe/modules/pose_detection/pose_detection.tflite"
++      model_path: "../mediapipe/modules/pose_detection/pose_detection.tflite"
+       #
+       delegate: { gpu { use_advanced_gpu_api: true } }
+     }
+diff --git a/third_party/opencv_linux.BUILD b/third_party/opencv_linux.BUILD
+index 8445855..afc3700 100644
+--- a/third_party/opencv_linux.BUILD
++++ b/third_party/opencv_linux.BUILD
+@@ -18,14 +18,14 @@ cc_library(
+         #"include/aarch64-linux-gnu/opencv4/opencv2/cvconfig.h",
+         #"include/arm-linux-gnueabihf/opencv4/opencv2/cvconfig.h",
+         #"include/x86_64-linux-gnu/opencv4/opencv2/cvconfig.h",
+-        #"include/opencv4/opencv2/**/*.h*",
++        "include/opencv4/opencv2/**/*.h*",
+     ]),
+     includes = [
+         # For OpenCV 4.x
+         #"include/aarch64-linux-gnu/opencv4/",
+         #"include/arm-linux-gnueabihf/opencv4/",
+         #"include/x86_64-linux-gnu/opencv4/",
+-        #"include/opencv4/",
++        "include/opencv4/",
+     ],
+     linkopts = [
+         "-l:libopencv_core.so",
+-- 
+2.37.1
+
