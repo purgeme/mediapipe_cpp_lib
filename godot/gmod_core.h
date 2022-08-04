@@ -1,49 +1,112 @@
 #pragma once
 
-#if defined(_MSC_VER) // M$VS
-    #define DLL_EXPORT __declspec(dllexport)
-    #define DLL_IMPORT __declspec(dllimport)
-#elif defined(__GNUC__) // GCC
-    #define DLL_EXPORT __attribute__((visibility("default")))
-    #define DLL_IMPORT
-#else
-    #define DLL_EXPORT
-    #define DLL_IMPORT
-    #pragma warning Unknown dynamic link import/export semantics.
-#endif
+#include<vector>
+#include<list>
+#include<atomic>
+#include<memory>
+#include<thread>
 
-#if defined(UMP_EXPORTS)
-	#define UMP_API DLL_EXPORT
-#elif defined(UMP_IMPORTS)
-	#define UMP_API DLL_IMPORT
-#else
-	#define UMP_API
-#endif
+#include "gmod_api.h"
+#include "absl/flags/flag.h"
+#include "absl/flags/parse.h"
+#include "mediapipe/framework/calculator_framework.h"
 
-#ifdef __cplusplus
-extern "C"
+class Observer : public IObserver
 {
-#endif
+    public:
 
-//C code goes here
+        Observer(const char* in_stream_name) { _stream_name = in_stream_name;}
 
-double ** return_face_trackers();
-double ** return_hand_right_trackers();
-double ** return_hand_left_trackers();
-double ** return_pose_trackers();
+        absl::Status AddOutputStream(std::shared_ptr<mediapipe::CalculatorGraph> graph){
+        // absl::Status ObserveOutputStream(mediapipe::CalculatorGraph* graph){
+            std::string presence_name(_stream_name);
+            presence_name.append("_presence");
 
-void toggle_face(bool x);
-void toggle_hand_right(bool x);
-void toggle_hand_left(bool x);
-void toggle_pose(bool x);
-void toggle_camera(bool x);
-void toggle_detection(bool x);
+            graph->ObserveOutputStream(presence_name, [this](const mediapipe::Packet& pk)
+            {
+                _presence = pk.Get<bool>();
 
-int start(const char* filename);
-void stop();
+                if( _presence_callback){
+                    // _callback->OnPresence(this, _presence);
+                    _presence_callback(this, _presence);
+                }
+                return absl::OkStatus();
+            });
+
+            RET_CHECK_OK(
+                graph->ObserveOutputStream(_stream_name, [this](const mediapipe::Packet& pk)
+                {
+
+                    if( _packet_callback){
+                        _raw_data = pk.GetRaw();
+                        _message_type = pk.GetTypeId().hash_code();
+                        
+                        // _callback->OnPacket(this);
+                        _packet_callback(this);
+
+                        _raw_data = nullptr;
+                        _message_type = 0;
+                    }
+                    return absl::OkStatus();
+                })
+            );
+            return absl::OkStatus();
+        }
+
+        virtual void SetPresenceCallback(void (*in_presence_callback)(class IObserver*, bool)) override { _presence_callback = in_presence_callback; LOG(INFO) << "Setting presence callback";}
+        virtual void SetPacketCallback(void (*in_packet_callback)(class IObserver*)) override { _packet_callback = in_packet_callback; LOG(INFO) << "Setting packet callback";}
+        virtual size_t GetMessageType() override { return _message_type; }
+        virtual const void* const GetData() override { return _raw_data; }
+
+    protected:
+        std::string _stream_name;
+        // IPacketCallback* _callback = nullptr;
+        void  (*_presence_callback)(class IObserver*, bool);
+        void  (*_packet_callback)(class IObserver*);
+        // const void* _raw_data = nullptr;
+        const void* _raw_data = nullptr;
+        size_t _message_type;
+        bool _presence = false;
+};
+
+class GMOD : public IGMOD
+{
+public:
+    virtual bool get_camera() override;
+    virtual void set_camera(bool x) override;
+    virtual bool get_overlay() override;
+    virtual void set_overlay(bool x) override;
+
+    virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) override;
+
+    virtual IObserver* create_observer(const char* stream_name) override;
+
+    virtual void start(const char* filename) override;
+    virtual void stop() override;
+
+private:
+    void _workerThread();
+    void _shutMPPGraph();
+    absl::Status _runMPPGraph();
+
+private:
+    int _cam_id;
+    int _cam_resx;
+    int _cam_resy;
+    int _cam_fps;
+    bool _show_camera;
+    bool _show_overlay;
+    std::string _graph_filename;
+
+
+    std::unique_ptr<std::thread> _worker;
+    std::atomic<bool> _run_flag;
+
+    std::list<std::unique_ptr<Observer>> _observers;
+
+public:
+    std::shared_ptr<mediapipe::CalculatorGraph> _graph;
+
+};
 
 void hello();
-
-#ifdef __cplusplus
-} // extern "C"
-#endif

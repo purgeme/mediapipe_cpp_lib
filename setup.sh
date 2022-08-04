@@ -11,4 +11,4 @@ cd ..
 
 # Copy the project files
 echo "Copying project files..."
-cp -r godot mediapipe/mediapipe/godot
+\cp -r godot/* mediapipe/mediapipe/godot/

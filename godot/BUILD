@@ -4,7 +4,7 @@ package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
     name = "gmod",
-    srcs = ["gmod_core.cc", "gmod_core.h"],
+    srcs = ["gmod_core.cc", "gmod_core.h", "gmod_api.h"],
     deps = [
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
