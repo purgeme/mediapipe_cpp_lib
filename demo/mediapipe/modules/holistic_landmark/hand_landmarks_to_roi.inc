@@ -1,0 +1,6 @@
+"\nt\022\035HandLandmarksToRectCalculator\032\035NORM_LANDMARKS:hand_landmarks"
+"\032\025IMAGE_SIZE:image_size\"\035NORM_RECT:palm_landmarks_rect\nr\022\034Rec"
+"tTransformationCalculator\032\035NORM_RECT:palm_landmarks_rect\032\025IMAGE_SI"
+"ZE:image_size\"\003roi:\027\302\230\250\350\007\021\r\000\000\000@\025\000\000"
+"\000@5\315\314\314\2758\001R\030LANDMARKS:hand_landmarksR\025IMAGE_SIZE:image_"
+"sizez\007ROI:roi\242\001\022HandLandmarksToRoi"

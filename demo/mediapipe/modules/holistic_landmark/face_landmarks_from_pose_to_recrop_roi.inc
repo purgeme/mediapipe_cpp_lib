@@ -1,0 +1,8 @@
+"\nh\022\036LandmarksToDetectionCalculator\032\'NORM_LANDMARKS:face_landmarks_f"
+"rom_pose\"\035DETECTION:pose_face_detection\n~\022\033DetectionsToRectsCalcula"
+"tor\032\035DETECTION:pose_face_detection\032\025IMAGE_SIZE:image_size\"\030NOR"
+"M_RECT:pose_face_rect:\017\372\275\213\352\007\t\010\005\020\002%\000\000\000"
+"\000\nh\022\034RectTransformationCalculator\032\030NORM_RECT:pose_face_rect"
+"\032\025IMAGE_SIZE:image_size\"\003roi:\022\302\230\250\350\007\014\r\000\000@"
+"@\025\000\000@@8\001R1FACE_LANDMARKS_FROM_POSE:face_landmarks_from_poseR\025IM"
+"AGE_SIZE:image_sizez\007ROI:roi\242\001 FaceLandmarksFromPoseToRecropRoi"

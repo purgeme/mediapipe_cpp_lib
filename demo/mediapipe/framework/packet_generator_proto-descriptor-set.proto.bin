@@ -1,0 +1,12 @@
+
+‹
+*mediapipe/framework/packet_generator.proto	mediapipe"$
+PacketGeneratorOptions*
+ œ€€€€"«
+PacketGeneratorConfig)
+packet_generator (	RpacketGenerator*
+input_side_packet (	RinputSidePacket&
+external_inputê (	RexternalInput,
+output_side_packet (	RoutputSidePacket(
+external_outputë (	RexternalOutput;
+options (2!.mediapipe.PacketGeneratorOptionsRoptions

@@ -53,17 +53,15 @@ class Observer : public IObserver
             return absl::OkStatus();
         }
 
-        virtual void SetPresenceCallback(void (*in_presence_callback)(class IObserver*, bool)) override { _presence_callback = in_presence_callback; LOG(INFO) << "Setting presence callback";}
-        virtual void SetPacketCallback(void (*in_packet_callback)(class IObserver*)) override { _packet_callback = in_packet_callback; LOG(INFO) << "Setting packet callback";}
+        virtual void SetPresenceCallback(std::function<void(class IObserver*, bool)> in_presence_callback) override { _presence_callback = in_presence_callback; LOG(INFO) << "Setting presence callback";}
+        virtual void SetPacketCallback(std::function<void(class IObserver*)> in_packet_callback) override { _packet_callback = in_packet_callback; LOG(INFO) << "Setting packet callback";}
         virtual size_t GetMessageType() override { return _message_type; }
         virtual const void* const GetData() override { return _raw_data; }
 
     protected:
         std::string _stream_name;
-        // IPacketCallback* _callback = nullptr;
-        void  (*_presence_callback)(class IObserver*, bool);
-        void  (*_packet_callback)(class IObserver*);
-        // const void* _raw_data = nullptr;
+        std::function<void(class IObserver*, bool)>  _presence_callback;
+        std::function<void(class IObserver*)>  _packet_callback;
         const void* _raw_data = nullptr;
         size_t _message_type;
         bool _presence = false;

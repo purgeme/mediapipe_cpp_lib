@@ -54,11 +54,9 @@ absl::Status GMOD::_runMPPGraph() {
   RET_CHECK(capture.isOpened());
 
   cv::namedWindow(kWindowName, /*flags=WINDOW_AUTOSIZE*/ 1);
-#if (CV_MAJOR_VERSION >= 3) && (CV_MINOR_VERSION >= 2)
-    capture.set(cv::CAP_PROP_FRAME_WIDTH, 640);
-    capture.set(cv::CAP_PROP_FRAME_HEIGHT, 480);
-    capture.set(cv::CAP_PROP_FPS, 30);
-#endif
+  capture.set(cv::CAP_PROP_FRAME_WIDTH, _cam_resx);
+  capture.set(cv::CAP_PROP_FRAME_HEIGHT, _cam_resy);
+  capture.set(cv::CAP_PROP_FPS, _cam_fps);
 
   LOG(INFO) << "Start running the calculator graph.";
 
@@ -158,7 +156,6 @@ void GMOD::start(const char* filename){
 
 IObserver* GMOD::create_observer(const char* stream_name){
   auto* observer = new Observer(stream_name);
-	// observer->AddRef();
 	_observers.emplace_back(observer);
 	return observer;
 }
@@ -192,17 +189,11 @@ void GMOD::_workerThread(){
 
 void GMOD::_shutMPPGraph()
 {
-	// log_i("UmpPipeline::Shutdown");
-
 	_graph.reset();
 	_observers.clear();
 
 	if (_show_camera)
 		cv::destroyAllWindows();
-
-	// ReleaseFramePool();
-
-	// log_i("UmpPipeline::Shutdown OK");
 }
 
 void GMOD::stop(){

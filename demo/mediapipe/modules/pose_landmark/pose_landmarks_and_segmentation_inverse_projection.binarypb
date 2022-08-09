@@ -1,0 +1,9 @@
+
+Ä"LandmarkLetterboxRemovalCalculatorLANDMARKS:roi_landmarks#LETTERBOX_PADDING:letterbox_padding"LANDMARKS:adjusted_landmarks
+î"LandmarkLetterboxRemovalCalculator!LANDMARKS:roi_auxiliary_landmarks#LETTERBOX_PADDING:letterbox_padding"&LANDMARKS:adjusted_auxiliary_landmarks
+jLandmarkProjectionCalculator!NORM_LANDMARKS:adjusted_landmarksNORM_RECT:roi"NORM_LANDMARKS:landmarks
+~LandmarkProjectionCalculator+NORM_LANDMARKS:adjusted_auxiliary_landmarksNORM_RECT:roi""NORM_LANDMARKS:auxiliary_landmarks
+l!WorldLandmarkProjectionCalculatorLANDMARKS:roi_world_landmarksNORM_RECT:roi"LANDMARKS:world_landmarks
+]InverseMatrixCalculatorMATRIX:transformation_matrix"$MATRIX:inverse_transformation_matrix
+ñWarpAffineCalculatorIMAGE:roi_segmentation_mask$MATRIX:inverse_transformation_matrixOUTPUT_SIZE:image_size"IMAGE:segmentation_mask:
+∫‹√ëRIMAGE_SIZE:image_sizeRNORM_RECT:roiR#LETTERBOX_PADDING:letterbox_paddingRMATRIX:transformation_matrixRLANDMARKS:roi_landmarksR+AUXILIARY_LANDMARKS:roi_auxiliary_landmarksR#WORLD_LANDMARKS:roi_world_landmarksR'SEGMENTATION_MASK:roi_segmentation_maskzLANDMARKS:landmarksz'AUXILIARY_LANDMARKS:auxiliary_landmarkszWORLD_LANDMARKS:world_landmarksz#SEGMENTATION_MASK:segmentation_mask¢-PoseLandmarksAndSegmentationInverseProjection

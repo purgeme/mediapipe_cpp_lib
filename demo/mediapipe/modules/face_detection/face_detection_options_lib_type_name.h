@@ -1,0 +1,2 @@
+#define MP_OPTION_TYPE_NS mediapipe
+#define MP_OPTION_TYPE_NAME FaceDetectionOptions

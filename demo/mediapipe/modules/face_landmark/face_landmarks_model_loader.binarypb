@@ -1,0 +1,7 @@
+
+šSwitchContainer*ENABLE:with_attention2PACKET:model_path:Ü’Öá§
+ÕaConstantSidePacketCalculator:AªÐòÖ;
+9"7../mediapipe/modules/face_landmark/face_landmark.tflitepConstantSidePacketCalculator:PªÐòÖJ
+H"F../mediapipe/modules/face_landmark/face_landmark_with_attention.tflite
+HLocalFileContentsCalculator*FILE_PATH:model_path2CONTENTS:model_blob
+;TfLiteModelCalculator*MODEL_BLOB:model_blob2MODEL:model‚WITH_ATTENTION:with_attentionŠMODEL:model¢FaceLandmarksModelLoader

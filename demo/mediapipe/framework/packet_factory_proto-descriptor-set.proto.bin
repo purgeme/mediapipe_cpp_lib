@@ -1,0 +1,12 @@
+
+ú
+(mediapipe/framework/packet_factory.proto	mediapipe""
+PacketFactoryOptions*
+ œ€€€€"Ï
+PacketFactoryConfig%
+packet_factory (	RpacketFactory,
+output_side_packet (	RoutputSidePacket(
+external_outputê (	RexternalOutput9
+options (2.mediapipe.PacketFactoryOptionsRoptions"M
+PacketManagerConfig6
+packet (2.mediapipe.PacketFactoryConfigRpacket

@@ -1,0 +1,5 @@
+
+pGateCalculatorprev_filtered_segmentation_mask"%gated_prev_filtered_segmentation_mask*ALLOW:enable:úýÁæ
+¥SegmentationSmoothingCalculatorMASK:segmentation_mask3MASK_PREVIOUS:gated_prev_filtered_segmentation_mask"(MASK_SMOOTHED:filtered_segmentation_mask:ÂÎáŸ333?
+ŠPreviousLoopbackCalculatorMAIN:segmentation_maskLOOP:filtered_segmentation_mask")PREV_LOOP:prev_filtered_segmentation_maskj
+LOOPR#SEGMENTATION_MASK:segmentation_maskz5FILTERED_SEGMENTATION_MASK:filtered_segmentation_mask‚ENABLE:enable¢PoseSegmentationFiltering

@@ -1,0 +1,6 @@
+"\nm\022\033DetectionsToRectsCalculator\032\023DETECTION:detection\032\025IMAGE"
+"_SIZE:image_size\"\021NORM_RECT:raw_roi:\017\372\275\213\352\007\t\010\000\020"
+"\002%\000\000\264B\nf\022\034RectTransformationCalculator\032\021NORM_RECT:raw"
+"_roi\032\025IMAGE_SIZE:image_size\"\003roi:\027\302\230\250\350\007\021\rff&@"
+"\025ff&@5\000\000\000\2778\001R\023DETECTION:detectionR\025IMAGE_SIZE:image_si"
+"zez\007ROI:roi\242\001\033PalmDetectionDetectionToRoi"

@@ -1,0 +1,21 @@
+
+Í
+9mediapipe/calculators/tflite/ssd_anchors_calculator.proto	mediapipe$mediapipe/framework/calculator.proto"Þ
+SsdAnchorsCalculatorOptions(
+input_size_width (RinputSizeWidth*
+input_size_height (RinputSizeHeight
+	min_scale (RminScale
+	max_scale (RmaxScale+
+anchor_offset_x (:0.5RanchorOffsetX+
+anchor_offset_y (:0.5RanchorOffsetY
+
+num_layers (R	numLayers*
+feature_map_width (RfeatureMapWidth,
+feature_map_height	 (RfeatureMapHeight
+strides
+ (Rstrides#
+aspect_ratios (RaspectRatiosE
+reduce_boxes_in_lowest_layer (:falseRreduceBoxesInLowestLayerH
+interpolated_scale_aspect_ratio (:1RinterpolatedScaleAspectRatio1
+fixed_anchor_size (:falseRfixedAnchorSize2Y
+ext.mediapipe.CalculatorOptionsÿ¸óu (2&.mediapipe.SsdAnchorsCalculatorOptionsRext

@@ -1,0 +1,7 @@
+
+?ImagePropertiesCalculatorIMAGE:input_video"SIZE:image_size
+Ñ FaceLandmarksFromPoseToRecropRoi1FACE_LANDMARKS_FROM_POSE:face_landmarks_from_poseIMAGE_SIZE:image_size"ROI:face_roi_from_pose
+hFaceDetectionShortRangeByRoiCpuIMAGE:input_videoROI:face_roi_from_pose"DETECTIONS:face_detections
+s!FaceDetectionFrontDetectionsToRoiDETECTIONS:face_detectionsIMAGE_SIZE:image_size"ROI:face_roi_from_detection
+çFaceTrackingLANDMARKS:face_landmarks'FACE_RECROP_ROI:face_roi_from_detectionIMAGE_SIZE:image_size"#FACE_TRACKING_ROI:face_tracking_roi
+vFaceLandmarkCpuIMAGE:input_videoROI:face_tracking_roi"LANDMARKS:face_landmarks*WITH_ATTENTION:refine_landmarksRIMAGE:input_videoR1FACE_LANDMARKS_FROM_POSE:face_landmarks_from_posezFACE_LANDMARKS:face_landmarksz%FACE_ROI_FROM_POSE:face_roi_from_posez/FACE_ROI_FROM_DETECTION:face_roi_from_detectionz#FACE_TRACKING_ROI:face_tracking_roiÇ!REFINE_LANDMARKS:refine_landmarks¢FaceLandmarksFromPoseCpu

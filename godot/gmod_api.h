@@ -1,5 +1,3 @@
-#include<cstddef>
-
 class IPacketCallback
 {
     public:
@@ -10,8 +8,8 @@ class IPacketCallback
 class IObserver
 {
     public:
-        virtual void SetPresenceCallback(void (*in_presence_callback)(class IObserver*, bool))=0;
-        virtual void SetPacketCallback(void (*in_presence_callback)(class IObserver*))=0;
+        virtual void SetPresenceCallback(std::function<void(class IObserver*, bool)> in_presence_callback)=0;
+        virtual void SetPacketCallback(std::function<void(class IObserver*)> in_packet_callback)=0;
         virtual size_t GetMessageType()=0;
         virtual const void* const GetData()=0;
 };

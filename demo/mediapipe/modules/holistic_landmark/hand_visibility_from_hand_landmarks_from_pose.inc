@@ -1,0 +1,8 @@
+"\nd\022%SplitNormalizedLandmarkListCalculator\032\030hand_landmarks_from_pose"
+"\"\023pose_wrist_landmark:\014\362\350\326\335\007\006\n\004\010\000\020\001\n"
+"e\022\034LandmarkVisibilityCalculator\032\"NORM_LANDMARKS:pose_wrist_landmark"
+"\"!VISIBILITY:wrist_visibility_score\n^\022\026ThresholdingCalculator\032\034F"
+"LOAT:wrist_visibility_score\"\025FLAG:wrist_visibility:\017\222\276\344\337"
+"\007\t\t\232\231\231\231\231\231\271?R1HAND_LANDMARKS_FROM_POSE:hand_landmarks"
+"_from_posez\033VISIBILITY:wrist_visibility\242\001\'HandVisibilityFromHandLand"
+"marksFromPose"

@@ -1,0 +1,12 @@
+-shared
+-o
+bazel-out/k8-opt/bin/mediapipe/modules/face_detection/libface_detection_options_registry.so
+-fuse-ld=gold
+-Wl,-no-as-needed
+-Wl,-z,relro,-z,now
+-B/usr/bin
+-pass-exit-codes
+-Wl,--gc-sections
+bazel-out/k8-opt/bin/mediapipe/modules/face_detection/_objs/face_detection_options_registry/face_detection_options_lib.pic.o
+-lstdc++
+-lm

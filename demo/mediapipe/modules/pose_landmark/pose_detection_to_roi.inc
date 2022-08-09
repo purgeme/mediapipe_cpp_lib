@@ -1,0 +1,6 @@
+"\np\022\036AlignmentPointsRectsCalculator\032\023DETECTION:detection\032\025IM"
+"AGE_SIZE:image_size\"\021NORM_RECT:raw_roi:\017\372\275\213\352\007\t\010\000"
+"\020\001%\000\000\264B\na\022\034RectTransformationCalculator\032\021NORM_RECT"
+":raw_roi\032\025IMAGE_SIZE:image_size\"\003roi:\022\302\230\250\350\007\014\r"
+"\000\000\240?\025\000\000\240?8\001R\023DETECTION:detectionR\025IMAGE_SIZE:ima"
+"ge_sizez\007ROI:roi\242\001\022PoseDetectionToRoi"
