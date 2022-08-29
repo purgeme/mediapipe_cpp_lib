@@ -1,3 +1,0 @@
-rcsD
-bazel-out/k8-opt/bin/mediapipe/calculators/tensor/libinference_calculator_options_registry.lo
-bazel-out/k8-opt/bin/mediapipe/calculators/tensor/_objs/inference_calculator_options_registry/inference_calculator_options_lib.o

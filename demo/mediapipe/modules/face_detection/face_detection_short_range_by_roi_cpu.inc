@@ -1,5 +1,0 @@
-"\n\224\001\022\027FaceDetectionShortRange\032\013IMAGE:image\032\007ROI:roi\""
-"\025DETECTIONS:detectionsB:\n2type.googleapis.com/mediapipe.FaceDetectionOptio"
-"ns\022\0042\002\"\000\212\001\017OPTIONS:optionsR\013IMAGE:imageR\007ROI:roiz"
-"\025DETECTIONS:detections\242\001\032FaceDetectionShortRangeCpu\322>4\n2type.g"
-"oogleapis.com/mediapipe.FaceDetectionOptions"

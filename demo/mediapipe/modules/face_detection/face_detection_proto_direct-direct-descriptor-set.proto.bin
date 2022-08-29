@@ -1,23 +1,0 @@
-
-¥
-5mediapipe/modules/face_detection/face_detection.proto	mediapipe7mediapipe/calculators/tensor/inference_calculator.proto,mediapipe/framework/calculator_options.protomediapipe/gpu/gpu_origin.proto"’
-FaceDetectionOptions
-
-model_path (	R	modelPath8
-
-gpu_origin (2.mediapipe.GpuOrigin.ModeR	gpuOrigin!
-tensor_width (RtensorWidth#
-tensor_height (RtensorHeight
-
-num_layers (R	numLayers
-strides (RstridesH
-interpolated_scale_aspect_ratio (:1RinterpolatedScaleAspectRatio
-	num_boxes (RnumBoxes
-x_scale  (:0RxScale
-y_scale! (:0RyScale
-w_scale" (:0RwScale
-h_scale# (:0RhScale(
-min_score_thresh$ (RminScoreThreshJ
-delegate (2..mediapipe.InferenceCalculatorOptions.DelegateRdelegate2S
-ext.mediapipe.CalculatorOptionsîó¼² (2.mediapipe.FaceDetectionOptionsRextBE
-*com.google.mediapipe.modules.facedetectionBFaceDetectionFrontProto

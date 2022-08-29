@@ -1,11 +1,0 @@
-
-r%SplitNormalizedLandmarkListCalculatorpose_landmarks"left_hand_landmarks_from_pose:ÚË÷›
-
-
-
-èHandLandmarksFromPoseCpuIMAGE:input_video6HAND_LANDMARKS_FROM_POSE:left_hand_landmarks_from_pose""HAND_LANDMARKS:left_hand_landmarks"*HAND_ROI_FROM_POSE:left_hand_roi_from_pose".HAND_ROI_FROM_RECROP:left_hand_roi_from_recrop"(HAND_TRACKING_ROI:left_hand_tracking_roi
-s%SplitNormalizedLandmarkListCalculatorpose_landmarks"right_hand_landmarks_from_pose:ÚË÷›
-
-
-
-îHandLandmarksFromPoseCpuIMAGE:input_video7HAND_LANDMARKS_FROM_POSE:right_hand_landmarks_from_pose"#HAND_LANDMARKS:right_hand_landmarks"+HAND_ROI_FROM_POSE:right_hand_roi_from_pose"/HAND_ROI_FROM_RECROP:right_hand_roi_from_recrop")HAND_TRACKING_ROI:right_hand_tracking_roiRIMAGE:input_videoRPOSE_LANDMARKS:pose_landmarksz'LEFT_HAND_LANDMARKS:left_hand_landmarksz)RIGHT_HAND_LANDMARKS:right_hand_landmarksz/LEFT_HAND_ROI_FROM_POSE:left_hand_roi_from_posez3LEFT_HAND_ROI_FROM_RECROP:left_hand_roi_from_recropz-LEFT_HAND_TRACKING_ROI:left_hand_tracking_roiz1RIGHT_HAND_ROI_FROM_POSE:right_hand_roi_from_posez5RIGHT_HAND_ROI_FROM_RECROP:right_hand_roi_from_recropz/RIGHT_HAND_TRACKING_ROI:right_hand_tracking_roi¢HandLandmarksLeftAndRightCpu

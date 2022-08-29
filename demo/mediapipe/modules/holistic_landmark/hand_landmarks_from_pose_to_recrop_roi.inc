@@ -1,8 +1,0 @@
-"\nm\022\036LandmarksToDetectionCalculator\032\'NORM_LANDMARKS:hand_landmarks_f"
-"rom_pose\"\"DETECTION:hand_detection_from_pose\n\202\001\022\'HandDetectionsFr"
-"omPoseToRectsCalculator\032\"DETECTION:hand_detection_from_pose\032\025IMAGE_S"
-"IZE:image_size\"\034NORM_RECT:hand_roi_from_pose\nq\022\034RectTransformationC"
-"alculator\032\034NORM_RECT:hand_roi_from_pose\032\025IMAGE_SIZE:image_size\""
-"\003roi:\027\302\230\250\350\007\021\r\315\314,@\025\315\314,@5\315\314\314"
-"\2758\001R1HAND_LANDMARKS_FROM_POSE:hand_landmarks_from_poseR\025IMAGE_SIZE:im"
-"age_sizez\007ROI:roi\242\001 HandLandmarksFromPoseToRecropRoi"

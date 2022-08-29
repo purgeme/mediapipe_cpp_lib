@@ -13,9 +13,7 @@ int main(){
     test->set_overlay(false);
 
     auto obs = test->create_observer("face_landmarks");
-    // obs->SetPresenceCallback([](class IObserver* observer, bool present){ std::cout << present << std::endl; });
     obs->SetPresenceCallback([](class IObserver* observer, bool present){});
-    // obs->SetPacketCallback([](class IObserver* observer){ std::cout << observer->GetData() << std::endl; });
     obs->SetPacketCallback([](class IObserver* observer){ 
         const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
         size_t message_type = observer->GetMessageType(); 

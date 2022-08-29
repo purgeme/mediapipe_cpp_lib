@@ -1,11 +1,0 @@
-
-’
-(mediapipe/framework/stream_handler.proto	mediapipe+mediapipe/framework/mediapipe_options.proto"ž
-InputStreamHandlerConfigK
-input_stream_handler (	:DefaultInputStreamHandlerRinputStreamHandler5
-options (2.mediapipe.MediaPipeOptionsRoptions"Î
-OutputStreamHandlerConfigN
-output_stream_handler (	:InOrderOutputStreamHandlerRoutputStreamHandler*
-input_side_packet (	RinputSidePacket5
-options (2.mediapipe.MediaPipeOptionsRoptionsB<
-com.google.mediapipe.protoBStreamHandlerProto¢	MediaPipe

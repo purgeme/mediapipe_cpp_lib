@@ -1,7 +1,0 @@
-"\nq\022\033DetectionsToRectsCalculator\032\025DETECTIONS:detections\032\025IMA"
-"GE_SIZE:image_size\"\021NORM_RECT:raw_roi:\021\372\275\213\352\007\013\010\000"
-"\020\001%\000\000\000\0000\002\nf\022\034RectTransformationCalculator\032\021N"
-"ORM_RECT:raw_roi\032\025IMAGE_SIZE:image_size\"\003roi:\027\302\230\250\350"
-"\007\021\r\000\000\000@\025\000\000\000@5\315\314\314\2758\001R\025DETECTIONS:"
-"detectionsR\025IMAGE_SIZE:image_sizez\007ROI:roi\242\001!FaceDetectionFrontDet"
-"ectionsToRoi"

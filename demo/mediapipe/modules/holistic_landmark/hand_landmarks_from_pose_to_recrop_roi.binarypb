@@ -1,4 +1,0 @@
-
-mLandmarksToDetectionCalculator'NORM_LANDMARKS:hand_landmarks_from_pose""DETECTION:hand_detection_from_pose
-‚'HandDetectionsFromPoseToRectsCalculator"DETECTION:hand_detection_from_poseIMAGE_SIZE:image_size"NORM_RECT:hand_roi_from_pose
-qRectTransformationCalculatorNORM_RECT:hand_roi_from_poseIMAGE_SIZE:image_size"roi:Â˜¨èÍÌ,@ÍÌ,@5ÍÌÌ½8R1HAND_LANDMARKS_FROM_POSE:hand_landmarks_from_poseRIMAGE_SIZE:image_sizezROI:roi¢ HandLandmarksFromPoseToRecropRoi

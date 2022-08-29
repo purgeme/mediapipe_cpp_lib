@@ -1,8 +1,0 @@
-
-x'HandVisibilityFromHandLandmarksFromPose1HAND_LANDMARKS_FROM_POSE:hand_landmarks_from_pose"VISIBILITY:hand_visibility
-cGateCalculatorhand_landmarks_from_poseALLOW:hand_visibility" ensured_hand_landmarks_from_pose
-?ImagePropertiesCalculatorIMAGE:input_video"SIZE:image_size
-å HandLandmarksFromPoseToRecropRoi9HAND_LANDMARKS_FROM_POSE:ensured_hand_landmarks_from_poseIMAGE_SIZE:image_size"ROI:hand_roi_from_pose
-jHandRecropByRoiCpuIMAGE:input_videoROI:hand_roi_from_pose")HAND_ROI_FROM_RECROP:hand_roi_from_recrop
-èHandTrackingLANDMARKS:hand_landmarks)HAND_ROI_FROM_RECROP:hand_roi_from_recropIMAGE_SIZE:image_size"#HAND_TRACKING_ROI:hand_tracking_roi
-UHandLandmarkCpuIMAGE:input_videoROI:hand_tracking_roi"LANDMARKS:hand_landmarksRIMAGE:input_videoR1HAND_LANDMARKS_FROM_POSE:hand_landmarks_from_posezHAND_LANDMARKS:hand_landmarksz%HAND_ROI_FROM_POSE:hand_roi_from_posez)HAND_ROI_FROM_RECROP:hand_roi_from_recropz#HAND_TRACKING_ROI:hand_tracking_roi¢HandLandmarksFromPoseCpu
