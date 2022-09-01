@@ -88,3 +88,11 @@ test->stop();
 ```
 
 For now, the exposed functions can be seen in godot/gmod_api.h.
+
+## Refs
+
+https://mediapipe.dev/
+
+https://github.com/wongfei/ue4-mediapipe-plugin
+
+https://github.com/wongfei/mediapipe/tree/unreal
