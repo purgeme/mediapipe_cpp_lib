@@ -10,7 +10,7 @@ git am ../patch/0001-mediapipe_module.patch
 cd ..
 
 # Copy the project files
-mkdir mediapipe/godot/
+mkdir mediapipe/cpp_library/
 echo "Copying project files..."
 \cp -r src/* mediapipe/cpp_library/
 
