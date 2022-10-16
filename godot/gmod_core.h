@@ -39,13 +39,13 @@ class Observer : public IObserver
 
                     if( _packet_callback){
                         _raw_data = pk.GetRaw();
-                        _message_type = pk.GetTypeId().hash_code();
+                        _message_type = pk.GetTypeId().name();
                         
                         // _callback->OnPacket(this);
                         _packet_callback(this);
 
                         _raw_data = nullptr;
-                        _message_type = 0;
+                        _message_type = "";
                     }
                     return absl::OkStatus();
                 })
@@ -55,7 +55,7 @@ class Observer : public IObserver
 
         virtual void SetPresenceCallback(std::function<void(class IObserver*, bool)> in_presence_callback) override { _presence_callback = in_presence_callback; LOG(INFO) << "Setting presence callback";}
         virtual void SetPacketCallback(std::function<void(class IObserver*)> in_packet_callback) override { _packet_callback = in_packet_callback; LOG(INFO) << "Setting packet callback";}
-        virtual size_t GetMessageType() override { return _message_type; }
+        virtual std::string GetMessageType() override { return _message_type; }
         virtual const void* const GetData() override { return _raw_data; }
 
     protected:
@@ -63,7 +63,7 @@ class Observer : public IObserver
         std::function<void(class IObserver*, bool)>  _presence_callback;
         std::function<void(class IObserver*)>  _packet_callback;
         const void* _raw_data = nullptr;
-        size_t _message_type;
+        std::string _message_type;
         bool _presence = false;
 };
 

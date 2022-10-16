@@ -10,7 +10,7 @@ class IObserver
     public:
         virtual void SetPresenceCallback(std::function<void(class IObserver*, bool)> in_presence_callback)=0;
         virtual void SetPacketCallback(std::function<void(class IObserver*)> in_packet_callback)=0;
-        virtual size_t GetMessageType()=0;
+        virtual std::string GetMessageType()=0;
         virtual const void* const GetData()=0;
 };
 
