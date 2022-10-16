@@ -12,7 +12,7 @@ cd ..
 # Copy the project files
 mkdir mediapipe/godot/
 echo "Copying project files..."
-\cp -r godot/* mediapipe/godot/
+\cp -r src/* mediapipe/cpp_library/
 
 # Copy packet.h file ( to be moved to patch file)
 mv mediapipe/mediapipe/framework/packet.h mediapipe/mediapipe/framework/packet.h.old
