@@ -1,6 +1,9 @@
 #include <cstdlib>
 #include <string>
 #include <thread>
+#include <iostream>
+#include <mutex>
+#include <condition_variable>
 
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
@@ -17,8 +20,6 @@
 #include "mediapipe/framework/formats/landmark.pb.h"
 
 #include "gmod_core.h"
-
-const int face_landmarks_count = 468;
 
 absl::Status GMOD::_runMPPGraph() {
 
@@ -69,6 +70,8 @@ absl::Status GMOD::_runMPPGraph() {
 
   LOG(INFO) << "Start grabbing and processing frames.";
 
+  _run_flag = true;
+
   while (_run_flag) {
 
     // Capture opencv camera or video frame.
@@ -118,6 +121,10 @@ absl::Status GMOD::_runMPPGraph() {
     }
     const int pressed_key = cv::waitKey(5);
     if (pressed_key >= 0 && pressed_key != 255) _run_flag = false;
+
+    // This is set here to make sure the first packets are sent so that their message type can be found out.
+    // A temporary fix for a problem, might become permanent_graph.
+    _load_flag = true; 
   }
 
   MP_RETURN_IF_ERROR(_graph->CloseInputStream(kInputStream));
@@ -148,9 +155,13 @@ void GMOD::set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps)
   _cam_fps = cam_fps;
 }
 
+bool GMOD::is_loaded(){
+  return _load_flag;
+}
+
 void GMOD::start(const char* filename){
   _graph_filename = filename;
-  _run_flag = true;
+  _load_flag = false;
   _worker = std::make_unique<std::thread>([this]() { this->_workerThread(); });
 }
 

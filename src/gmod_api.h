@@ -26,6 +26,8 @@ class IGMOD
 
         virtual IObserver* create_observer(const char* stream_name) = 0;
 
+        virtual bool is_loaded() = 0;
+
         virtual void start(const char* filename) = 0;
         virtual void stop() = 0;
 };

@@ -37,16 +37,14 @@ class Observer : public IObserver
                 graph->ObserveOutputStream(_stream_name, [this](const mediapipe::Packet& pk)
                 {
 
+                    _raw_data = pk.GetRaw();
+                    _message_type = pk.GetTypeId().name();
                     if( _packet_callback){
-                        _raw_data = pk.GetRaw();
-                        _message_type = pk.GetTypeId().name();
-                        
                         // _callback->OnPacket(this);
                         _packet_callback(this);
-
-                        _raw_data = nullptr;
-                        _message_type = "";
                     }
+                    _raw_data = nullptr;
+                    _message_type = "";
                     return absl::OkStatus();
                 })
             );
@@ -79,6 +77,8 @@ public:
 
     virtual IObserver* create_observer(const char* stream_name) override;
 
+    virtual bool is_loaded() override;
+
     virtual void start(const char* filename) override;
     virtual void stop() override;
 
@@ -99,6 +99,7 @@ private:
 
     std::unique_ptr<std::thread> _worker;
     std::atomic<bool> _run_flag;
+    std::atomic<bool> _load_flag;
 
     std::list<std::unique_ptr<Observer>> _observers;
 
