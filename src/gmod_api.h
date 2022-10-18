@@ -1,10 +1,3 @@
-class IPacketCallback
-{
-    public:
-        virtual void OnPresence(class IObserver* observer, bool present) = 0;
-        virtual void OnPacket(class IObserver* observer) = 0;
-};
-
 class IObserver
 {
     public:

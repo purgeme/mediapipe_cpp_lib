@@ -5,6 +5,44 @@ This project provides a C++ dynamic library which allows use of mediapipe soluti
 The primary purpose of this project was to create a mediapipe module for the Godot engine but it can be used in any C++ project as demonstrated in demo.
 Mediapipe module for Godot: https://github.com/purgeme/GodotMediapipeModule.
 
+## Supported mediapipe solutions and graphs:
+
+-   **Holistic Tracking**
+
+    test->start("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
+
+-   **Hand Tracking**
+
+    test->start("mediapipe_graphs/hand_tracking/hand_detection_desktop_live.pbtxt");
+    test->start("mediapipe_graphs/hand_tracking/hand_tracking_desktop_live.pbtxt");
+
+-   **Pose Tracking**
+
+    test->start("mediapipe_graphs/pose_tracking/pose_tracking_cpu.pbtxt");
+
+-   **Iris Tracking**
+
+    test->start("mediapipe_graphs/iris_tracking/iris_tracking_cpu.pbtxt");
+    test->start("mediapipe_graphs/iris_tracking/iris_tracking_gpu.pbtxt");
+
+-   **Face Detection**
+
+    test->start("mediapipe_graphs/face_detection/face_detection_desktop_live.pbtxt");
+    test->start("mediapipe_graphs/face_detection/face_detection_full_range_desktop_live.pbtxt");
+
+-   **Face Mesh**
+
+    test->start("mediapipe_graphs/face_mesh/face_mesh_desktop_live.pbtxt");
+
+-   **Selfie Segmentation**
+
+    test->start("mediapipe_graphs/selfie_segmentation/selfie_segmentation_cpu.pbtxt");
+
+-   **Hair Segmentation**
+
+    test->start("mediapipe_graphs/hair_segmentation/hair_segmentation_desktop_live.pbtxt");
+
+
 ## Getting started:
 
 ### Step 1: Run setup.sh.
@@ -29,7 +67,7 @@ To use the library in any C++ project, add the library to system or add path of 
 
 To get the landmarks from from the raw data, they need to be casted to NormalizedLandmarkList, that is their data type as shown in demo file, this is derived from landmark.pb.h from mediapipe.
 
-*This was done for performance reasons as otherwise it would require copying all data to a C++ array in the library.*
+*This was done for performance reasons as otherwise it would require copying all data to a C++ array in the library. If a non-copy method is found, it can be used.*
 
 Mediapipe does not provide this file directly as it is generated after compilation. These files are automatically copied after compilling the library into `import_files` directory.
 Since these files were compiled by mediapipe with protobuf version 3.19.1, make sure you have the same version installed on system or download it and add it to include directories while compiling your project.
@@ -64,6 +102,7 @@ auto obs = test->create_observer("face_landmarks");
 ```
 
 Add callback functions. It is important to add callback functions for both presence and packet, even if they are empty.
+Here is where you can do what you want with data from the graphs.
 
 ```c++
 obs->SetPresenceCallback([](class IObserver* observer, bool present){});
@@ -78,7 +117,7 @@ obs->SetPacketCallback([](class IObserver* observer){
 Start tracking. Here provide the graph file for tracking.
 
 ```c++
-test->start("mediapipe_graphs/holistic_tracking_cpu.pbtxt");
+test->start("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
 ```
 
 To stop tracking properly:
@@ -88,6 +127,10 @@ test->stop();
 ```
 
 For now, the exposed functions can be seen in godot/gmod_api.h.
+
+***
+
+If you wish to use the graphs that return images, add an output stream with whatever name, this will carry the output as a cv::Mat as by default the image outputs are mediapipe::ImageFrame. Then add a node with the calculator ImageFrameToOpenCVMatCalculator, this takes in the ImageFrame and outputs a Mat.
 
 ## Refs
 

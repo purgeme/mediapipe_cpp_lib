@@ -165,11 +165,6 @@ void GMOD::start(const char* filename){
   _worker = std::make_unique<std::thread>([this]() { this->_workerThread(); });
 }
 
-IObserver* GMOD::create_observer(const char* stream_name){
-  auto* observer = new Observer(stream_name);
-	_observers.emplace_back(observer);
-	return observer;
-}
 
 void GMOD::_workerThread(){
   LOG(INFO) << "Enter WorkerThread";
@@ -213,6 +208,12 @@ void GMOD::stop(){
     _worker->join();
     _worker.reset();
   }
+}
+
+IObserver* GMOD::create_observer(const char* stream_name){
+  auto* observer = new Observer(stream_name);
+	_observers.emplace_back(observer);
+	return observer;
 }
 
 void hello() {

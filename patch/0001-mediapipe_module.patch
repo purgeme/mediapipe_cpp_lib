@@ -56,22 +56,22 @@ index fead245..fb5c2bd 100644
 +node {
 +  calculator: "PacketPresenceCalculator"
 +  input_stream: "PACKET:face_landmarks"
-+  output_stream: "PRESENCE:face_landmark_presence"
++  output_stream: "PRESENCE:face_landmarks_presence"
 +}
 +node {
 +  calculator: "PacketPresenceCalculator"
 +  input_stream: "PACKET:right_hand_landmarks"
-+  output_stream: "PRESENCE:right_hand_landmark_presence"
++  output_stream: "PRESENCE:right_hand_landmarks_presence"
 +}
 +node {
 +  calculator: "PacketPresenceCalculator"
 +  input_stream: "PACKET:left_hand_landmarks"
-+  output_stream: "PRESENCE:left_hand_landmark_presence"
++  output_stream: "PRESENCE:left_hand_landmarks_presence"
 +}
 +node {
 +  calculator: "PacketPresenceCalculator"
 +  input_stream: "PACKET:pose_landmarks"
-+  output_stream: "PRESENCE:pose_landmark_presence"
++  output_stream: "PRESENCE:pose_landmarks_presence"
 +}
 \ No newline at end of file
 diff --git a/mediapipe/modules/face_detection/face_detection_full_range.pbtxt b/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
