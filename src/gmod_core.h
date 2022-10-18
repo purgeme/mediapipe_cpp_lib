@@ -36,15 +36,15 @@ class Observer : public IObserver
             RET_CHECK_OK(
                 graph->ObserveOutputStream(_stream_name, [this](const mediapipe::Packet& pk)
                 {
-
                     _raw_data = pk.GetRaw();
                     _message_type = pk.GetTypeId().name();
+
                     if( _packet_callback){
-                        // _callback->OnPacket(this);
                         _packet_callback(this);
                     }
                     _raw_data = nullptr;
-                    _message_type = "";
+                    _message_type.clear();
+                    // _message_type = NULL;
                     return absl::OkStatus();
                 })
             );

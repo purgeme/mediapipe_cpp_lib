@@ -45,7 +45,6 @@ absl::Status GMOD::_runMPPGraph() {
 
   for (auto& iter : _observers)
 	{
-    std::cout << _graph << std::endl;
 		RET_CHECK_OK(iter->AddOutputStream(_graph));
 	}
 
