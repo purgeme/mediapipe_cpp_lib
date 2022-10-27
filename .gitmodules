@@ -1,0 +1,3 @@
+[submodule "mediapipe"]
+	path = mediapipe
+	url = https://github.com/google/mediapipe.git
