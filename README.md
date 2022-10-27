@@ -45,21 +45,40 @@ Mediapipe module for Godot: https://github.com/purgeme/GodotMediapipeModule.
 
 ## Getting started:
 
-### Step 1: Run setup.sh.
+### Dependencies:
 
-This downloads mediapipe and sets it up to build the library.
+- Python ( to run the scripts )
 
-*Note: Some changes are made to paths of models so other mediapipe projects can be built in the downloaded repo but they won't be able to run directly due to changed model paths.*
+- Setup mediapipe dependencies: https://google.github.io/mediapipe/getting_started/install.html
 
-### Step 2: Run build.sh.
+
+### Step 1: Clone repo and update submodules:
+
+Clone the repo:
+
+`git clone --recursive-submodules https://github.com/purgeme/mediapipe_cpp_lib.git`
+
+If you have cloned without `--recursive-submodules`, make sure to update the submodules:
+
+`git submodule init`
+
+`git submodule update`
+
+### Step 2: Run setup.py.
+
+Applies patch to mediapipe, replaces file where required and copies library source code.
+
+### Step 3: Run build.py.
 
 Builds the library and copies it to library folder and puts files required to be imported into C++ project in import_files directory
 
-### Step 3: Download models and extract graph files
+*The requirement of files from mediapipe to be imported in c++ project could be removed in the future, this would make using this library more straight forward and easy but might cost some performance.*
+
+### Step 4: Download models and extract graph files
 
 Run `download_models.sh` and `extract_graphs.sh` to download model and graph files in `mediapipe_models` and `mediapipe_graphs` directories respectively.
 
-### Step 4: Import and copy files
+### Step 5: Import and copy files
 
 The library uses model files from mediapipe_models folder so it should be present in the parent folder from where gmod_api.h is being used.
 
