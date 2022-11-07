@@ -76,7 +76,7 @@ Builds the library and copies it to library folder and puts files required to be
 
 ### Step 4: Download models and extract graph files
 
-Run `download_models.sh` and `extract_graphs.sh` to download model and graph files in `mediapipe_models` and `mediapipe_graphs` directories respectively.
+Run `download_models.py` and `extract_graphs.py` to download model and graph files in `mediapipe_models` and `mediapipe_graphs` directories respectively.
 
 ### Step 5: Import and copy files
 
@@ -152,6 +152,8 @@ For now, the exposed functions can be seen in godot/gmod_api.h.
 If you wish to use the graphs that return images, add an output stream with whatever name, this will carry the output as a cv::Mat as by default the image outputs are mediapipe::ImageFrame. Then add a node with the calculator ImageFrameToOpenCVMatCalculator, this takes in the ImageFrame and outputs a Mat.
 
 ## Refs
+
+https://github.com/homuler/MediaPipeUnityPlugin/
 
 https://mediapipe.dev/
 

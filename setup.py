@@ -1,7 +1,5 @@
 #!/usr/bin/python
 import os
-import subprocess
-import sys
 import shutil
 import patch
 
@@ -17,26 +15,32 @@ library_files_dst = os.path.join(mediapipe_dir, "cpp_library")
 
 patch_file = open(os.path.dirname(__file__)+"/patch/0001-mediapipe_module.patch", "rb")
 
+def copy2dir( src, dst ):
+    if os.path.isdir(dst):
+        inp = input ("Destination already exists, do you wish to replace it ? [N/y]: ")
+        if inp == "y" or inp == "Y":
+            shutil.rmtree(dst)
+            shutil.copytree(src, dst)
+            return
+        else:
+            return
+    else:
+        shutil.copytree(src, dst)
+
 # Apply patch file
-print("##########")
 print("Applying patch file...")
 os.chdir(mediapipe_dir)
 pset = patch.fromfile(mediapipe_dir+"/../patch/0001-mediapipe_module.patch")
 pset.apply()
 print("Patch applied!")
-print("##########")
 
 # Copy packet.h file
-print("\n##########")
-print("Replacing packet.h file...")
+print("\nReplacing packet.h file...")
 shutil.copyfile(old_packet_src, old_packet_dst)
 shutil.copyfile(packet_src, packet_dst)
 print("packet.h replaced!")
-print("##########")
 
 # Copy src files
-print("\n##########")
-print("Copying library code...")
-shutil.copytree(library_files_src, library_files_dst)
+print("\nCopying library code...")
+copy2dir(library_files_src, library_files_dst)
 print("Copied library code!")
-print("##########")
