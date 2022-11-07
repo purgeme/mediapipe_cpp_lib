@@ -69,8 +69,8 @@ cc_binary(
 )
 
 cc_library(
-    name = "test_calculator",
-    srcs = ["test_calculator.cc"],
+    name = "ImageFrameToMatCalculator",
+    srcs = ["ImageFrameToMatCalculator.cc"],
     visibility = ["//visibility:public"],
     deps = [
         "//mediapipe/framework:calculator_framework",

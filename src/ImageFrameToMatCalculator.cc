@@ -8,7 +8,7 @@ namespace mediapipe {
 //
 // Example config:
 // node {
-//   calculator: "TestCalculator"
+//   calculator: "ImageFrameToMatCalculator"
 //   input_stream: "ImageFrame"
 //   output_stream: "cv::Mat"
 // }
