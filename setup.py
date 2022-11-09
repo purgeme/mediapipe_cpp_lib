@@ -3,17 +3,19 @@ import os
 import shutil
 import patch
 
-mediapipe_dir = os.path.join(os.path.dirname(__file__), 'mediapipe')
+current_dir = os.path.dirname(__file__)
+mediapipe_dir = os.path.join(current_dir, 'mediapipe')
 
-old_packet_src = os.path.join(mediapipe_dir, "mediapipe/framework/packet.h")
-old_packet_dst = os.path.join(mediapipe_dir, "mediapipe/framework/packet.h.old")
-packet_src = os.path.join(os.path.dirname(__file__), "patch/packet.h")
-packet_dst = os.path.join(mediapipe_dir, "mediapipe/framework/packet.h")
+old_packet_src = os.path.join(mediapipe_dir, "mediapipe", "framework", "packet.h")
+old_packet_dst = os.path.join(mediapipe_dir, "mediapipe", "framework", "packet.h.old")
+packet_src = os.path.join(current_dir, "patch", "packet.h")
+packet_dst = os.path.join(mediapipe_dir, "mediapipe", "framework", "packet.h")
 
-library_files_src = os.path.join(os.path.dirname(__file__), "src")
+library_files_src = os.path.join(current_dir, "src")
 library_files_dst = os.path.join(mediapipe_dir, "cpp_library")
 
-patch_file = open(os.path.dirname(__file__)+"/patch/0001-mediapipe_module.patch", "rb")
+patch_path = os.path.join(current_dir, "patch", "0001-mediapipe_module.patch")
+patch_file = open(patch_path, "rb")
 
 def copy2dir( src, dst ):
     if os.path.isdir(dst):
@@ -30,7 +32,7 @@ def copy2dir( src, dst ):
 # Apply patch file
 print("Applying patch file...")
 os.chdir(mediapipe_dir)
-pset = patch.fromfile(mediapipe_dir+"/../patch/0001-mediapipe_module.patch")
+pset = patch.fromfile(os.path.join(current_dir, "patch", "0001-mediapipe_module.patch"))
 pset.apply()
 print("Patch applied!")
 

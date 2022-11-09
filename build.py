@@ -45,13 +45,13 @@ def _setup_build_options():
         if os.system == 'windows':
             # Windows does not support GPU yet
             print('GPU builds are not supported on windows!')
+            exit()
         else:
             build_options += ['--copt', '-DMESA_EGL_NO_X11_HEADERS', '--copt', '-DEGL_NO_X11']
     else:
         build_options += ['--define', 'DISABLE_MEDIAPIPE_GPU=1']
-
-    if os.system == 'windows':
-        build_options += ['--action_envs', 'PYTHON_BIN_PATH="C://path//to//python.exe"']
+        if os.system == 'windows':
+            build_options += ['--action_envs', 'PYTHON_BIN_PATH="C://path//to//python.exe"']
     return build_options
 
 def _build_library(cmd):
