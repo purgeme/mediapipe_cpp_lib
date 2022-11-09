@@ -1,5 +1,6 @@
 #!/usr/bin/python
 import os
+import platform
 import subprocess
 import shutil
 
@@ -42,7 +43,7 @@ def _setup_build_options():
     build_options = []
     # Setup build command
     if _get_input('Do you wish to build with GPU support ? [N/y]: ', False):
-        if os.system == 'windows':
+        if platform.system() == 'Windows':
             # Windows does not support GPU yet
             print('GPU builds are not supported on windows!')
             exit()
@@ -50,15 +51,15 @@ def _setup_build_options():
             build_options += ['--copt', '-DMESA_EGL_NO_X11_HEADERS', '--copt', '-DEGL_NO_X11']
     else:
         build_options += ['--define', 'DISABLE_MEDIAPIPE_GPU=1']
-        if os.system == 'windows':
-            build_options += ['--action_envs', 'PYTHON_BIN_PATH="C://path//to//python.exe"']
+        if platform.system() == 'windows':
+            build_options += ['--action_envs', 'PYTHON_BIN_PATH=C://Python//python.exe']
     return build_options
 
 def _build_library(cmd):
     # Build library
     os.chdir(mediapipe_dir)
     print("Building library...")
-    return subprocess.run(cmd)
+    return subprocess.run(cmd, shell=True)
 
 def _copy_library():
     # Copy library

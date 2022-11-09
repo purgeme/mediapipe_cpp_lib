@@ -54,7 +54,7 @@ cc_binary(
         # ":instant_motion_tracking_calculators",
         # ":objectron_calculators",
 
-        ":test_calculator",
+        ":ImageFrameToMatCalculator",
     ] + select({
         "//mediapipe/gpu:disable_gpu": [],
         "//conditions:default": [
