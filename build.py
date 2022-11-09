@@ -50,7 +50,7 @@ def _setup_build_options():
         else:
             build_options += ['--copt', '-DMESA_EGL_NO_X11_HEADERS', '--copt', '-DEGL_NO_X11']
     else:
-        build_options += ['--define', 'DISABLE_MEDIAPIPE_GPU=1']
+        build_options += ['--define', 'MEDIAPIPE_DISABLE_GPU=1']
         if platform.system() == 'Windows':
             build_options += ['--action_env', 'PYTHON_BIN_PATH=C://Python//python.exe']
     return build_options
