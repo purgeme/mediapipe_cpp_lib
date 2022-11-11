@@ -8,7 +8,11 @@ import shutil
 current_dir = os.path.dirname(__file__)
 mediapipe_dir = os.path.join(current_dir, 'mediapipe')
 
-library_name = 'libgmod.so'
+if platform.system() == 'Windows':
+    library_name = 'gmod.dll'
+else:
+    library_name = 'libgmod.so'
+
 library_src = os.path.join(mediapipe_dir, 'bazel-bin', 'cpp_library')
 library_dst = os.path.join(current_dir, 'library')
 
@@ -52,14 +56,17 @@ def _setup_build_options():
     else:
         build_options += ['--define', 'MEDIAPIPE_DISABLE_GPU=1']
         if platform.system() == 'Windows':
-            build_options += ['--action_env', 'PYTHON_BIN_PATH=C://Python//python.exe']
+            build_options += ['--action_env', 'PYTHON_BIN_PATH=C:\Python\python.exe'] # Change python path to you installation
     return build_options
 
 def _build_library(cmd):
     # Build library
     os.chdir(mediapipe_dir)
     print("Building library...")
-    return subprocess.run(cmd, shell=True)
+    if platform.system() == "Windows":
+        return subprocess.run(cmd, shell=True)
+    else:
+        return subprocess.run(cmd)
 
 def _copy_library():
     # Copy library
@@ -80,7 +87,6 @@ def _copy_import_files():
 build_options = _setup_build_options()
 
 build_cmd = build_prefix + build_options + build_suffix
-
 
 if _build_library(build_cmd).returncode != 0:
     print("Error building library...!!!")

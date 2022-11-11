@@ -5,42 +5,25 @@ This project provides a C++ dynamic library which allows use of mediapipe soluti
 The primary purpose of this project was to create a mediapipe module for the Godot engine but it can be used in any C++ project as demonstrated in demo.
 Mediapipe module for Godot: https://github.com/purgeme/GodotMediapipeModule.
 
+For now GPU graphs are not supported on Windows as mediapipe for windows does not support GPU yet.
+
 ## Supported mediapipe solutions and graphs:
 
--   **Holistic Tracking**
+-   Holistic Tracking
 
-    test->start("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
+-   Hand Tracking
 
--   **Hand Tracking**
+-   Pose Tracking
 
-    test->start("mediapipe_graphs/hand_tracking/hand_detection_desktop_live.pbtxt");
-    test->start("mediapipe_graphs/hand_tracking/hand_tracking_desktop_live.pbtxt");
+-   Iris Tracking
 
--   **Pose Tracking**
+-   Face Detection
 
-    test->start("mediapipe_graphs/pose_tracking/pose_tracking_cpu.pbtxt");
+-   Face Mesh
 
--   **Iris Tracking**
+-   Selfie Segmentation
 
-    test->start("mediapipe_graphs/iris_tracking/iris_tracking_cpu.pbtxt");
-    test->start("mediapipe_graphs/iris_tracking/iris_tracking_gpu.pbtxt");
-
--   **Face Detection**
-
-    test->start("mediapipe_graphs/face_detection/face_detection_desktop_live.pbtxt");
-    test->start("mediapipe_graphs/face_detection/face_detection_full_range_desktop_live.pbtxt");
-
--   **Face Mesh**
-
-    test->start("mediapipe_graphs/face_mesh/face_mesh_desktop_live.pbtxt");
-
--   **Selfie Segmentation**
-
-    test->start("mediapipe_graphs/selfie_segmentation/selfie_segmentation_cpu.pbtxt");
-
--   **Hair Segmentation**
-
-    test->start("mediapipe_graphs/hair_segmentation/hair_segmentation_desktop_live.pbtxt");
+-   Hair Segmentation
 
 
 ## Getting started:
@@ -56,7 +39,7 @@ Mediapipe module for Godot: https://github.com/purgeme/GodotMediapipeModule.
 
 Clone the repo:
 
-`git clone --recursive-submodules https://github.com/purgeme/mediapipe_cpp_lib.git`
+`git clone --recurse-submodules https://github.com/purgeme/mediapipe_cpp_lib.git`
 
 If you have cloned without `--recursive-submodules`, make sure to update the submodules:
 
