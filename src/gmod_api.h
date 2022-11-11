@@ -2,7 +2,14 @@
 #include<string>
 #include<functional>
 
-class IObserver
+#ifdef _WIN32
+#define DLLEXPORT __declspec(dllexport)
+#else
+#define DLLEXPORT
+#endif
+
+
+DLLEXPORT class IObserver
 {
     public:
         virtual void SetPresenceCallback(std::function<void(class IObserver*, bool)> in_presence_callback)=0;
@@ -11,7 +18,7 @@ class IObserver
         virtual const void* const GetData()=0;
 };
 
-class IGMOD
+DLLEXPORT class IGMOD
 {
     public:
         virtual bool get_camera() = 0;
@@ -29,4 +36,4 @@ class IGMOD
         virtual void stop() = 0;
 };
 
-IGMOD* CreateGMOD();
+DLLEXPORT IGMOD* CreateGMOD();
