@@ -34,8 +34,9 @@ For now GPU graphs are not supported on Windows as mediapipe for windows does no
 
 - Setup mediapipe dependencies: https://google.github.io/mediapipe/getting_started/install.html
 
+### Building library:
 
-### Step 1: Clone repo and update submodules:
+#### Step 1: Clone repo and update submodules:
 
 Clone the repo:
 
@@ -47,21 +48,23 @@ If you have cloned without `--recursive-submodules`, make sure to update the sub
 
 `git submodule update`
 
-### Step 2: Run setup.py.
+#### Step 2: Run setup.py.
 
 Applies patch to mediapipe, replaces file where required and copies library source code.
 
-### Step 3: Run build.py.
+#### Step 3: Run build.py.
 
 Builds the library and copies it to library folder and puts files required to be imported into C++ project in import_files directory
 
 *The requirement of files from mediapipe to be imported in c++ project could be removed in the future, this would make using this library more straight forward and easy but might cost some performance.*
 
-### Step 4: Download models and extract graph files
+#### Step 4: Download models and extract graph files
 
 Run `download_models.py` and `extract_graphs.py` to download model and graph files in `mediapipe_models` and `mediapipe_graphs` directories respectively.
 
-### Step 5: Import and copy files
+### Using library:
+ 
+#### Import and copy files
 
 The library uses model files from mediapipe_models folder so it should be present in the parent folder from where gmod_api.h is being used.
 
@@ -76,6 +79,7 @@ Since these files were compiled by mediapipe with protobuf version 3.19.1, make 
 
 Download link: https://github.com/protocolbuffers/protobuf/releases/download/v3.19.1/protobuf-cpp-3.19.1.zip
 
+#### Code:
 
 First we include landmark data type.
 

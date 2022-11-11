@@ -83,7 +83,7 @@ index b526b67..261caf7 100644
    node_options: {
      [type.googleapis.com/mediapipe.FaceDetectionOptions] {
 -      model_path: "mediapipe/modules/face_detection/face_detection_full_range_sparse.tflite"
-+      model_path: "mediapipe_models/face_detection/face_detection_full_range_sparse.tflite"
++      model_path: "mediapipe_models/face_detection_full_range_sparse.tflite"
        tensor_width: 192
        tensor_height: 192
  
@@ -96,7 +96,7 @@ index eb9ed32..3da3e13 100644
    node_options: {
      [type.googleapis.com/mediapipe.FaceDetectionOptions] {
 -      model_path: "mediapipe/modules/face_detection/face_detection_short_range.tflite"
-+      model_path: "mediapipe_models/face_detection/face_detection_short_range.tflite"
++      model_path: "mediapipe_models/face_detection_short_range.tflite"
        tensor_width: 128
        tensor_height: 128
  
@@ -109,7 +109,7 @@ index ecac1a6..82f55d0 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/face_landmark/face_landmark.tflite"
-+              string_value: "mediapipe_models/face_landmark/face_landmark.tflite"
++              string_value: "mediapipe_models/face_landmark.tflite"
              }
            }
          }
@@ -118,7 +118,7 @@ index ecac1a6..82f55d0 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/face_landmark/face_landmark_with_attention.tflite"
-+              string_value: "mediapipe_models/face_landmark/face_landmark_with_attention.tflite"
++              string_value: "mediapipe_models/face_landmark_with_attention.tflite"
              }
            }
          }
@@ -131,7 +131,7 @@ index 6ecbfad..262abe0 100644
      [mediapipe.TensorsToClassificationCalculatorOptions.ext] {
        top_k: 1
 -      label_map_path: "mediapipe/modules/hand_landmark/handedness.txt"
-+      label_map_path: "mediapipe_models/hand_landmark/handedness.txt"
++      label_map_path: "mediapipe_models/handedness.txt"
        binary_classification: true
      }
    }
@@ -144,7 +144,7 @@ index 033ad44..bebfa49 100644
      [mediapipe.TensorsToClassificationCalculatorOptions.ext] {
        top_k: 1
 -      label_map_path: "mediapipe/modules/hand_landmark/handedness.txt"
-+      label_map_path: "mediapipe_models/hand_landmark/handedness.txt"
++      label_map_path: "mediapipe_models/handedness.txt"
        binary_classification: true
      }
    }
@@ -157,7 +157,7 @@ index c9ecf8a..388e025 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/hand_landmark/hand_landmark_lite.tflite"
-+              string_value: "mediapipe_models/hand_landmark/hand_landmark_lite.tflite"
++              string_value: "mediapipe_models/hand_landmark_lite.tflite"
              }
            }
          }
@@ -166,7 +166,7 @@ index c9ecf8a..388e025 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/hand_landmark/hand_landmark_full.tflite"
-+              string_value: "mediapipe_models/hand_landmark/hand_landmark_full.tflite"
++              string_value: "mediapipe_models/hand_landmark_full.tflite"
              }
            }
          }
@@ -179,7 +179,7 @@ index 75141d2..77866f1 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/holistic_landmark/hand_recrop.tflite"
-+      model_path: "mediapipe_models/holistic_landmark/hand_recrop.tflite"
++      model_path: "mediapipe_models/hand_recrop.tflite"
        delegate { xnnpack {} }
      }
    }
@@ -192,7 +192,7 @@ index 4fa8f29..b81ed3e 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/holistic_landmark/hand_recrop.tflite"
-+      model_path: "mediapipe_models/holistic_landmark/hand_recrop.tflite"
++      model_path: "mediapipe_models/hand_recrop.tflite"
      }
    }
  }
@@ -205,7 +205,7 @@ index f2c4b04..ea2aca4 100644
    options: {
      [mediapipe.TfLiteInferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/iris_landmark/iris_landmark.tflite"
-+      model_path: "mediapipe_models/iris_landmark/iris_landmark.tflite"
++      model_path: "mediapipe_models/iris_landmark.tflite"
        delegate { xnnpack {} }
      }
    }
@@ -218,7 +218,7 @@ index 9fb7898..c1c86e1 100644
    options: {
      [mediapipe.TfLiteInferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/iris_landmark/iris_landmark.tflite"
-+      model_path: "mediapipe_models/iris_landmark/iris_landmark.tflite"
++      model_path: "mediapipe_models/iris_landmark.tflite"
      }
    }
  }
@@ -231,7 +231,7 @@ index f7a09fc..622aa6a 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
-+      model_path: "mediapipe_models/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
++      model_path: "mediapipe_models/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
        delegate { xnnpack {} }
      }
    }
@@ -240,7 +240,7 @@ index f7a09fc..622aa6a 100644
    options: {
      [mediapipe.DetectionLabelIdToTextCalculatorOptions.ext] {
 -      label_map_path: "mediapipe/modules/objectron/object_detection_oidv4_labelmap.txt"
-+      label_map_path: "mediapipe_models/objectron/object_detection_oidv4_labelmap.txt"
++      label_map_path: "mediapipe_models/object_detection_oidv4_labelmap.txt"
      }
    }
  }
@@ -253,7 +253,7 @@ index 7873e80..6a96317 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
-+      model_path: "mediapipe_models/objectron/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
++      model_path: "mediapipe_models/object_detection_ssd_mobilenetv2_oidv4_fp16.tflite"
        delegate { gpu {} }
      }
    }
@@ -266,7 +266,7 @@ index f33a76e..a10d13a 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/palm_detection/palm_detection_lite.tflite"
-+              string_value: "mediapipe_models/palm_detection/palm_detection_lite.tflite"
++              string_value: "mediapipe_models/palm_detection_lite.tflite"
              }
            }
          }
@@ -275,7 +275,7 @@ index f33a76e..a10d13a 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/palm_detection/palm_detection_full.tflite"
-+              string_value: "mediapipe_models/palm_detection/palm_detection_full.tflite"
++              string_value: "mediapipe_models/palm_detection_full.tflite"
              }
            }
          }
@@ -288,7 +288,7 @@ index 79ee1ac..b341dac 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/pose_detection/pose_detection.tflite"
-+      model_path: "mediapipe_models/pose_detection/pose_detection.tflite"
++      model_path: "mediapipe_models/pose_detection.tflite"
        delegate {
          xnnpack {}
        }
@@ -301,7 +301,7 @@ index b95a117..d6a327a 100644
    options: {
      [mediapipe.InferenceCalculatorOptions.ext] {
 -      model_path: "mediapipe/modules/pose_detection/pose_detection.tflite"
-+      model_path: "mediapipe_models/pose_detection/pose_detection.tflite"
++      model_path: "mediapipe_models/pose_detection.tflite"
        #
        delegate: { gpu { use_advanced_gpu_api: true } }
      }
@@ -314,7 +314,7 @@ index ce7036e..0f123f1 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/pose_landmark/pose_landmark_lite.tflite"
-+              string_value: "mediapipe_models/pose_landmark/pose_landmark_lite.tflite"
++              string_value: "mediapipe_models/pose_landmark_lite.tflite"
              }
            }
          }
@@ -323,7 +323,7 @@ index ce7036e..0f123f1 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/pose_landmark/pose_landmark_full.tflite"
-+              string_value: "mediapipe_models/pose_landmark/pose_landmark_full.tflite"
++              string_value: "mediapipe_models/pose_landmark_full.tflite"
              }
            }
          }
@@ -332,7 +332,7 @@ index ce7036e..0f123f1 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/pose_landmark/pose_landmark_heavy.tflite"
-+              string_value: "mediapipe_models/pose_landmark/pose_landmark_heavy.tflite"
++              string_value: "mediapipe_models/pose_landmark_heavy.tflite"
              }
            }
          }
@@ -345,7 +345,7 @@ index e4b4e7c..ef6149f 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/selfie_segmentation/selfie_segmentation.tflite"
-+              string_value: "mediapipe_models/selfie_segmentation/selfie_segmentation.tflite"
++              string_value: "mediapipe_models/selfie_segmentation.tflite"
              }
            }
          }
@@ -354,7 +354,7 @@ index e4b4e7c..ef6149f 100644
            [mediapipe.ConstantSidePacketCalculatorOptions.ext]: {
              packet {
 -              string_value: "mediapipe/modules/selfie_segmentation/selfie_segmentation_landscape.tflite"
-+              string_value: "mediapipe_models/selfie_segmentation/selfie_segmentation_landscape.tflite"
++              string_value: "mediapipe_models/selfie_segmentation_landscape.tflite"
              }
            }
          }
