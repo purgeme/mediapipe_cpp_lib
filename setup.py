@@ -14,7 +14,7 @@ packet_dst = os.path.join(mediapipe_dir, "mediapipe", "framework", "packet.h")
 library_files_src = os.path.join(current_dir, "src")
 library_files_dst = os.path.join(mediapipe_dir, "cpp_library")
 
-patch_path = os.path.join(current_dir, "patch", "0001-mediapipe_module.patch")
+patch_path = os.path.join(current_dir, "patch")
 patch_file = open(patch_path, "rb")
 
 def copy2dir( src, dst ):
@@ -32,15 +32,9 @@ def copy2dir( src, dst ):
 # Apply patch file
 print("Applying patch file...")
 os.chdir(mediapipe_dir)
-pset = patch.fromfile(os.path.join(current_dir, "patch", "0001-mediapipe_module.patch"))
+pset = patch.fromfile(os.path.join(current_dir, "patch"))
 pset.apply()
 print("Patch applied!")
-
-# Copy packet.h file
-print("\nReplacing packet.h file...")
-shutil.copyfile(old_packet_src, old_packet_dst)
-shutil.copyfile(packet_src, packet_dst)
-print("packet.h replaced!")
 
 # Copy src files
 print("\nCopying library code...")
