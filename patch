@@ -1,9 +1,10 @@
-From 591a6d0f61ca392fdcf89321072311850d43bda8 Mon Sep 17 00:00:00 2001
-From: purg3me <jostaboi@protonmail.com>
-Date: Mon, 25 Jul 2022 10:10:09 +0530
-Subject: [PATCH] mediapipe_module
+From 8034669b17b1a1ae9ef467a883c8b161fced73f8 Mon Sep 17 00:00:00 2001
+From: Parvesh Kumar <parveshkumarbaloda@gmail.com>
+Date: Fri, 2 Jun 2023 17:03:50 +0530
+Subject: [PATCH] Updated model paths and merge packet
 
 ---
+ mediapipe/framework/packet.h                  |  6 ++++
  .../holistic_tracking_cpu.pbtxt               | 33 +++++++++++++++++++
  .../face_detection_full_range.pbtxt           |  2 +-
  .../face_detection_short_range.pbtxt          |  2 +-
@@ -23,10 +24,48 @@ Subject: [PATCH] mediapipe_module
  .../pose_landmark_model_loader.pbtxt          |  6 ++--
  .../selfie_segmentation_model_loader.pbtxt    |  4 +--
  third_party/opencv_linux.BUILD                |  4 +--
- 19 files changed, 59 insertions(+), 26 deletions(-)
+ 20 files changed, 65 insertions(+), 26 deletions(-)
 
+diff --git a/mediapipe/framework/packet.h b/mediapipe/framework/packet.h
+index af2ec5a9..4defd96e 100644
+--- a/mediapipe/framework/packet.h
++++ b/mediapipe/framework/packet.h
+@@ -190,6 +190,8 @@ class Packet {
+   // Crashes if IsEmpty() == true.
+   TypeId GetTypeId() const;
+ 
++  const void * const GetRaw() const; // UMP
++
+   // Returns the timestamp.
+   class Timestamp Timestamp() const;
+ 
+@@ -373,6 +375,7 @@ class HolderBase {
+   virtual const std::string RegisteredTypeName() const = 0;
+   // Get the type id of the underlying data type.
+   virtual TypeId GetTypeId() const = 0;
++  virtual const void * const GetRaw() const = 0; // UMP
+   // Downcasts this to Holder<T>.  Returns nullptr if deserialization
+   // failed or if the requested type is not what is stored.
+   template <typename T>
+@@ -507,6 +510,7 @@ class Holder : public HolderBase {
+     return *ptr_;
+   }
+   TypeId GetTypeId() const final { return kTypeId<T>; }
++  const void * const GetRaw() const final { return &data(); } // UMP
+   // Releases the underlying data pointer and transfers the ownership to a
+   // unique pointer.
+   // This method is dangerous and is only used by Packet::Consume() if the
+@@ -760,6 +764,8 @@ inline const T& Packet::Get() const {
+ 
+ inline Timestamp Packet::Timestamp() const { return timestamp_; }
+ 
++inline const void * const Packet::GetRaw() const { return holder_->GetRaw(); } // UMP
++
+ template <typename T>
+ Packet Adopt(const T* ptr) {
+   CHECK(ptr != nullptr);
 diff --git a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
-index fead245..fb5c2bd 100644
+index fead2456..e3e4230a 100644
 --- a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
 +++ b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
 @@ -6,6 +6,17 @@ input_stream: "input_video"
@@ -73,9 +112,8 @@ index fead245..fb5c2bd 100644
 +  input_stream: "PACKET:pose_landmarks"
 +  output_stream: "PRESENCE:pose_landmarks_presence"
 +}
-\ No newline at end of file
 diff --git a/mediapipe/modules/face_detection/face_detection_full_range.pbtxt b/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
-index b526b67..261caf7 100644
+index b526b67f..bde5bbc5 100644
 --- a/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
 +++ b/mediapipe/modules/face_detection/face_detection_full_range.pbtxt
 @@ -34,7 +34,7 @@ node {
@@ -88,7 +126,7 @@ index b526b67..261caf7 100644
        tensor_height: 192
  
 diff --git a/mediapipe/modules/face_detection/face_detection_short_range.pbtxt b/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
-index eb9ed32..3da3e13 100644
+index eb9ed320..0417f56c 100644
 --- a/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
 +++ b/mediapipe/modules/face_detection/face_detection_short_range.pbtxt
 @@ -34,7 +34,7 @@ node {
@@ -101,7 +139,7 @@ index eb9ed32..3da3e13 100644
        tensor_height: 128
  
 diff --git a/mediapipe/modules/face_landmark/face_landmarks_model_loader.pbtxt b/mediapipe/modules/face_landmark/face_landmarks_model_loader.pbtxt
-index ecac1a6..82f55d0 100644
+index ecac1a6b..8e857355 100644
 --- a/mediapipe/modules/face_landmark/face_landmarks_model_loader.pbtxt
 +++ b/mediapipe/modules/face_landmark/face_landmarks_model_loader.pbtxt
 @@ -24,7 +24,7 @@ node {
@@ -123,7 +161,7 @@ index ecac1a6..82f55d0 100644
            }
          }
 diff --git a/mediapipe/modules/hand_landmark/hand_landmark_cpu.pbtxt b/mediapipe/modules/hand_landmark/hand_landmark_cpu.pbtxt
-index 6ecbfad..262abe0 100644
+index 6ecbfad9..9610f485 100644
 --- a/mediapipe/modules/hand_landmark/hand_landmark_cpu.pbtxt
 +++ b/mediapipe/modules/hand_landmark/hand_landmark_cpu.pbtxt
 @@ -136,7 +136,7 @@ node {
@@ -136,7 +174,7 @@ index 6ecbfad..262abe0 100644
      }
    }
 diff --git a/mediapipe/modules/hand_landmark/hand_landmark_gpu.pbtxt b/mediapipe/modules/hand_landmark/hand_landmark_gpu.pbtxt
-index 033ad44..bebfa49 100644
+index 033ad440..d71e6dfb 100644
 --- a/mediapipe/modules/hand_landmark/hand_landmark_gpu.pbtxt
 +++ b/mediapipe/modules/hand_landmark/hand_landmark_gpu.pbtxt
 @@ -130,7 +130,7 @@ node {
@@ -149,7 +187,7 @@ index 033ad44..bebfa49 100644
      }
    }
 diff --git a/mediapipe/modules/hand_landmark/hand_landmark_model_loader.pbtxt b/mediapipe/modules/hand_landmark/hand_landmark_model_loader.pbtxt
-index c9ecf8a..388e025 100644
+index c9ecf8a0..c71ab93b 100644
 --- a/mediapipe/modules/hand_landmark/hand_landmark_model_loader.pbtxt
 +++ b/mediapipe/modules/hand_landmark/hand_landmark_model_loader.pbtxt
 @@ -24,7 +24,7 @@ node {
@@ -171,7 +209,7 @@ index c9ecf8a..388e025 100644
            }
          }
 diff --git a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
-index 75141d2..77866f1 100644
+index 75141d21..1d446378 100644
 --- a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
 +++ b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_cpu.pbtxt
 @@ -42,7 +42,7 @@ node {
@@ -184,7 +222,7 @@ index 75141d2..77866f1 100644
      }
    }
 diff --git a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
-index 4fa8f29..b81ed3e 100644
+index 4fa8f292..a8c92dd8 100644
 --- a/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
 +++ b/mediapipe/modules/holistic_landmark/hand_recrop_by_roi_gpu.pbtxt
 @@ -42,7 +42,7 @@ node {
@@ -197,7 +235,7 @@ index 4fa8f29..b81ed3e 100644
    }
  }
 diff --git a/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt b/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
-index f2c4b04..ea2aca4 100644
+index f2c4b041..66d2264c 100644
 --- a/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
 +++ b/mediapipe/modules/iris_landmark/iris_landmark_cpu.pbtxt
 @@ -81,7 +81,7 @@ node {
@@ -210,7 +248,7 @@ index f2c4b04..ea2aca4 100644
      }
    }
 diff --git a/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt b/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
-index 9fb7898..c1c86e1 100644
+index 9fb78983..d31a7499 100644
 --- a/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
 +++ b/mediapipe/modules/iris_landmark/iris_landmark_gpu.pbtxt
 @@ -88,7 +88,7 @@ node {
@@ -223,7 +261,7 @@ index 9fb7898..c1c86e1 100644
    }
  }
 diff --git a/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt b/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
-index f7a09fc..622aa6a 100644
+index f7a09fc1..9c9f4182 100644
 --- a/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
 +++ b/mediapipe/modules/objectron/object_detection_oid_v4_cpu.pbtxt
 @@ -35,7 +35,7 @@ node {
@@ -245,7 +283,7 @@ index f7a09fc..622aa6a 100644
    }
  }
 diff --git a/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt b/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
-index 7873e80..6a96317 100644
+index 7873e808..d2eeabca 100644
 --- a/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
 +++ b/mediapipe/modules/objectron/object_detection_oid_v4_gpu.pbtxt
 @@ -37,7 +37,7 @@ node {
@@ -258,7 +296,7 @@ index 7873e80..6a96317 100644
      }
    }
 diff --git a/mediapipe/modules/palm_detection/palm_detection_model_loader.pbtxt b/mediapipe/modules/palm_detection/palm_detection_model_loader.pbtxt
-index f33a76e..a10d13a 100644
+index f33a76ec..3d61bf94 100644
 --- a/mediapipe/modules/palm_detection/palm_detection_model_loader.pbtxt
 +++ b/mediapipe/modules/palm_detection/palm_detection_model_loader.pbtxt
 @@ -24,7 +24,7 @@ node {
@@ -280,7 +318,7 @@ index f33a76e..a10d13a 100644
            }
          }
 diff --git a/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt b/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
-index 79ee1ac..b341dac 100644
+index 79ee1ac9..97ceaead 100644
 --- a/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
 +++ b/mediapipe/modules/pose_detection/pose_detection_cpu.pbtxt
 @@ -71,7 +71,7 @@ node {
@@ -293,7 +331,7 @@ index 79ee1ac..b341dac 100644
          xnnpack {}
        }
 diff --git a/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt b/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
-index b95a117..d6a327a 100644
+index b95a1176..bc14cb25 100644
 --- a/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
 +++ b/mediapipe/modules/pose_detection/pose_detection_gpu.pbtxt
 @@ -68,7 +68,7 @@ node {
@@ -306,7 +344,7 @@ index b95a117..d6a327a 100644
        delegate: { gpu { use_advanced_gpu_api: true } }
      }
 diff --git a/mediapipe/modules/pose_landmark/pose_landmark_model_loader.pbtxt b/mediapipe/modules/pose_landmark/pose_landmark_model_loader.pbtxt
-index ce7036e..0f123f1 100644
+index ce7036eb..c40367ce 100644
 --- a/mediapipe/modules/pose_landmark/pose_landmark_model_loader.pbtxt
 +++ b/mediapipe/modules/pose_landmark/pose_landmark_model_loader.pbtxt
 @@ -24,7 +24,7 @@ node {
@@ -337,7 +375,7 @@ index ce7036e..0f123f1 100644
            }
          }
 diff --git a/mediapipe/modules/selfie_segmentation/selfie_segmentation_model_loader.pbtxt b/mediapipe/modules/selfie_segmentation/selfie_segmentation_model_loader.pbtxt
-index e4b4e7c..ef6149f 100644
+index e4b4e7cc..ae87c1e6 100644
 --- a/mediapipe/modules/selfie_segmentation/selfie_segmentation_model_loader.pbtxt
 +++ b/mediapipe/modules/selfie_segmentation/selfie_segmentation_model_loader.pbtxt
 @@ -27,7 +27,7 @@ node {
@@ -359,7 +397,7 @@ index e4b4e7c..ef6149f 100644
            }
          }
 diff --git a/third_party/opencv_linux.BUILD b/third_party/opencv_linux.BUILD
-index 8445855..afc3700 100644
+index 84458554..afc37009 100644
 --- a/third_party/opencv_linux.BUILD
 +++ b/third_party/opencv_linux.BUILD
 @@ -18,14 +18,14 @@ cc_library(
@@ -380,5 +418,5 @@ index 8445855..afc3700 100644
      linkopts = [
          "-l:libopencv_core.so",
 -- 
-2.37.1
+2.40.1
 
