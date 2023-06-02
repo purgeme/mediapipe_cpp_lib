@@ -58,7 +58,6 @@ print("##########")
 
 # Copy api file
 print("\nCopying api file...")
-copy2dir(graphs_src, graphs_dst)
 shutil.copyfile(api_src, api_dst)
 print("Copied api file!")
 
