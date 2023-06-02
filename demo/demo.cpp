@@ -1,7 +1,7 @@
 #include<iostream>
 #include<functional>
 #include<typeinfo>
-#include <opencv2/opencv.hpp>
+// #include <opencv2/opencv.hpp>
 
 #include "gmod_api.h"
 #include "mediapipe/framework/formats/landmark.pb.h"
