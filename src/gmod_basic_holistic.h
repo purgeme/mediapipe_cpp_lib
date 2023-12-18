@@ -11,11 +11,13 @@ class Holistic : public IHolistic
         virtual void Start() override;
         virtual void Stop() override;
         virtual std::vector<std::vector<float>>* GetData() override;
-        std::vector<std::vector<float>> _data;
+
+
     private:
-        mcl::GMOD* _gmod;
+        std::unique_ptr<mcl::GMOD> _gmod;
         bool _gpu;
-        std::vector<mcl::IObserver*> _observers;
+        std::vector<std::shared_ptr<mcl::IObserver>> _observers;
+        std::vector<std::vector<float>> _data;
 };
 
 } // namespace mcl_basic

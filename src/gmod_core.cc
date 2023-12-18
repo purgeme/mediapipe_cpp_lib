@@ -197,8 +197,8 @@ void GMOD::stop(){
   }
 }
 
-IObserver* GMOD::create_observer(const char* stream_name){
-  auto* observer = new Observer(stream_name);
+std::shared_ptr<IObserver> GMOD::create_observer(const char* stream_name){
+  std::shared_ptr<Observer> observer = std::make_unique<Observer>(stream_name);
 	_observers.emplace_back(observer);
 	return observer;
 }

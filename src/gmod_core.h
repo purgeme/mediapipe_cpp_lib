@@ -33,7 +33,6 @@ class Observer : public IObserver
         Observer(const char* in_stream_name) { _stream_name = in_stream_name;}
 
         absl::Status AddOutputStream(std::shared_ptr<mediapipe::CalculatorGraph> graph){
-        // absl::Status ObserveOutputStream(mediapipe::CalculatorGraph* graph){
             std::string presence_name(_stream_name);
             presence_name.append("_presence");
 
@@ -42,7 +41,6 @@ class Observer : public IObserver
                 _presence = pk.Get<bool>();
 
                 if( _presence_callback){
-                    // _callback->OnPresence(this, _presence);
                     _presence_callback(this, _presence);
                 }
                 return absl::OkStatus();
@@ -59,7 +57,6 @@ class Observer : public IObserver
                     }
                     _raw_data = nullptr;
                     _message_type.clear();
-                    // _message_type = NULL;
                     return absl::OkStatus();
                 })
             );
@@ -90,7 +87,7 @@ public:
 
     virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) override;
 
-    virtual IObserver* create_observer(const char* stream_name) override;
+    virtual std::shared_ptr<IObserver> create_observer(const char* stream_name) override;
 
     virtual bool is_loaded() override;
 
@@ -111,14 +108,11 @@ private:
     bool _show_overlay;
     std::string _graph_filename;
 
-
     std::unique_ptr<std::thread> _worker;
     std::atomic<bool> _run_flag;
     std::atomic<bool> _load_flag;
 
-    std::list<std::unique_ptr<Observer>> _observers;
-
-public:
+    std::list<std::shared_ptr<Observer>> _observers;
     std::shared_ptr<mediapipe::CalculatorGraph> _graph;
 
 };

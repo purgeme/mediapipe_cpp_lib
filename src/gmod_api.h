@@ -1,6 +1,7 @@
 #pragma once
 #include<string>
 #include<functional>
+#include<memory>
 
 #ifdef _WIN32
 #define DLLEXPORT __declspec(dllexport)
@@ -46,7 +47,7 @@ DLLEXPORT class IGMOD
 
         virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) = 0;
 
-        virtual IObserver* create_observer(const char* stream_name) = 0;
+        virtual std::shared_ptr<IObserver> create_observer(const char* stream_name) = 0;
 
         virtual bool is_loaded() = 0;
 

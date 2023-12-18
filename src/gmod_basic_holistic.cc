@@ -5,7 +5,7 @@ namespace mcl_basic {
 void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu){ // pass the camera properties
 
     // Create IGMOD
-    _gmod = new mcl::GMOD();
+    _gmod = std::make_unique<mcl::GMOD>();
 
     _gmod->set_camera(true);
     _gmod->set_overlay(true);
@@ -16,9 +16,7 @@ void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool g
 
     // Create observers
     _observers.push_back(_gmod->create_observer("face_landmarks"));
-    // _observers.push_back(_gmod->create_observer("face_landmarks"));
     _observers.push_back(_gmod->create_observer("pose_landmarks"));
-    // _observers.push_back(_gmod->create_observer("pose_world_landmarks"));
     _observers.push_back(_gmod->create_observer("left_hand_landmarks"));
     _observers.push_back(_gmod->create_observer("right_hand_landmarks"));
 
@@ -38,16 +36,34 @@ void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool g
     });
     // Pose Landmarks
     _observers[1]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
-    _observers[1]->SetPacketCallback([](class mcl::IObserver* observer){ });
+    _observers[1]->SetPacketCallback([this](class mcl::IObserver* observer){
+        const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
+        for(int i=0; i<33; i++){
+            this->_data[i][0] = data->landmark(0).x();
+            this->_data[i][1] = data->landmark(1).y();
+            this->_data[i][2] = data->landmark(2).z();
+        }
+    });
     // Left Hand Landmarks
     _observers[2]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
-    _observers[2]->SetPacketCallback([](class mcl::IObserver* observer){ });
+    _observers[2]->SetPacketCallback([this](class mcl::IObserver* observer){
+        const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
+        for(int i=0; i<21; i++){
+            this->_data[i][0] = data->landmark(0).x();
+            this->_data[i][1] = data->landmark(1).y();
+            this->_data[i][2] = data->landmark(2).z();
+        }
+    });
     // Right Hand Landmarks
     _observers[3]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
-    _observers[3]->SetPacketCallback([](class mcl::IObserver* observer){ });
-    // Pose World Landmarks
-    // _observers[2]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
-    // _observers[2]->SetPacketCallback([](class mcl::IObserver* observer){ });
+    _observers[3]->SetPacketCallback([this](class mcl::IObserver* observer){
+        const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
+        for(int i=0; i<21; i++){
+            this->_data[i][0] = data->landmark(0).x();
+            this->_data[i][1] = data->landmark(1).y();
+            this->_data[i][2] = data->landmark(2).z();
+        }
+    });
 }
 
 void Holistic::Start(){
