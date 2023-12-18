@@ -4,7 +4,7 @@ package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
     name = "gmod",
-    srcs = ["gmod_core.cc", "gmod_core.h", "gmod_api.h"],
+    srcs = ["gmod_api.h", "gmod_core.cc", "gmod_core.h", "gmod_basic_holistic.cc", "gmod_basic_holistic.h"],
     deps = [
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
@@ -40,6 +40,7 @@ cc_binary(
         "//mediapipe/framework/port:status",
         "//mediapipe/framework/port:logging",
         "//mediapipe/framework/port:map_util",
+            "//mediapipe/util:resource_util",
 
         ":face_detection_calculators",
         ":face_mesh_calculators",
@@ -47,14 +48,15 @@ cc_binary(
         ":hands_calculators",
         ":pose_calculators",
         ":holistic_calculators",
-        ":selfie_segmentation_calculators",
-        ":hair_segmentation_calculators",
-        ":object_detection_calculators",
-        ":box_tracking_calculators",
+        # ":selfie_segmentation_calculators",
+        # ":hair_segmentation_calculators",
+        # ":object_detection_calculators",
+        # ":box_tracking_calculators",
         # ":instant_motion_tracking_calculators",
         # ":objectron_calculators",
 
         ":ImageFrameToMatCalculator",
+
     ] + select({
         "//mediapipe/gpu:disable_gpu": [],
         "//conditions:default": [
@@ -65,6 +67,7 @@ cc_binary(
             "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
         ],
     }),
+    linkopts = ["-Wl,-soname,libgmod.so"],
     linkshared = True,
 )
 

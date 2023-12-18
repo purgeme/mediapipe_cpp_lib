@@ -8,6 +8,24 @@
 #define DLLEXPORT
 #endif
 
+DLLEXPORT void hello();
+
+namespace mcl_basic {
+
+DLLEXPORT class IHolistic 
+{
+    public:
+        virtual void Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu) = 0;
+        virtual void Start() = 0;
+        virtual void Stop() = 0;
+        virtual std::vector<std::vector<float>>* GetData() = 0;
+};
+
+DLLEXPORT IHolistic* CreateHolistic();
+
+} // namespace mcl_basic
+
+namespace mcl {
 
 DLLEXPORT class IObserver
 {
@@ -37,3 +55,5 @@ DLLEXPORT class IGMOD
 };
 
 DLLEXPORT IGMOD* CreateGMOD();
+
+} // namespace mcl
