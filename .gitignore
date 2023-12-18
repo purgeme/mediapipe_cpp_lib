@@ -1,1 +1,9 @@
 .vscode/
+
+mediapipe_*/
+import_files/
+library/
+
+demo/*
+!demo/demo.cpp
+!demo/demo.py

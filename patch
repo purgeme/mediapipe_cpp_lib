@@ -1,69 +1,54 @@
-From 8034669b17b1a1ae9ef467a883c8b161fced73f8 Mon Sep 17 00:00:00 2001
-From: Parvesh Kumar <parveshkumarbaloda@gmail.com>
-Date: Fri, 2 Jun 2023 17:03:50 +0530
-Subject: [PATCH] Updated model paths and merge packet
-
----
- mediapipe/framework/packet.h                  |  6 ++++
- .../holistic_tracking_cpu.pbtxt               | 33 +++++++++++++++++++
- .../face_detection_full_range.pbtxt           |  2 +-
- .../face_detection_short_range.pbtxt          |  2 +-
- .../face_landmarks_model_loader.pbtxt         |  4 +--
- .../hand_landmark/hand_landmark_cpu.pbtxt     |  2 +-
- .../hand_landmark/hand_landmark_gpu.pbtxt     |  2 +-
- .../hand_landmark_model_loader.pbtxt          |  4 +--
- .../hand_recrop_by_roi_cpu.pbtxt              |  2 +-
- .../hand_recrop_by_roi_gpu.pbtxt              |  2 +-
- .../iris_landmark/iris_landmark_cpu.pbtxt     |  2 +-
- .../iris_landmark/iris_landmark_gpu.pbtxt     |  2 +-
- .../object_detection_oid_v4_cpu.pbtxt         |  4 +--
- .../object_detection_oid_v4_gpu.pbtxt         |  2 +-
- .../palm_detection_model_loader.pbtxt         |  4 +--
- .../pose_detection/pose_detection_cpu.pbtxt   |  2 +-
- .../pose_detection/pose_detection_gpu.pbtxt   |  2 +-
- .../pose_landmark_model_loader.pbtxt          |  6 ++--
- .../selfie_segmentation_model_loader.pbtxt    |  4 +--
- third_party/opencv_linux.BUILD                |  4 +--
- 20 files changed, 65 insertions(+), 26 deletions(-)
-
+diff --git a/mediapipe/examples/desktop/demo_run_graph_main.cc b/mediapipe/examples/desktop/demo_run_graph_main.cc
+index b2e5ae30..15d62df8 100644
+--- a/mediapipe/examples/desktop/demo_run_graph_main.cc
++++ b/mediapipe/examples/desktop/demo_run_graph_main.cc
+@@ -63,7 +63,7 @@ absl::Status RunMPPGraph() {
+   if (load_video) {
+     capture.open(absl::GetFlag(FLAGS_input_video_path));
+   } else {
+-    capture.open(0);
++    capture.open(2);
+   }
+   RET_CHECK(capture.isOpened());
+ 
 diff --git a/mediapipe/framework/packet.h b/mediapipe/framework/packet.h
-index af2ec5a9..4defd96e 100644
+index 0b660f0d..d9a7ba60 100644
 --- a/mediapipe/framework/packet.h
 +++ b/mediapipe/framework/packet.h
-@@ -190,6 +190,8 @@ class Packet {
+@@ -215,6 +215,8 @@ class Packet {
    // Crashes if IsEmpty() == true.
    TypeId GetTypeId() const;
  
-+  const void * const GetRaw() const; // UMP
++  const void * const GetRaw() const; // GMP
 +
    // Returns the timestamp.
    class Timestamp Timestamp() const;
  
-@@ -373,6 +375,7 @@ class HolderBase {
+@@ -400,6 +402,7 @@ class HolderBase {
    virtual const std::string RegisteredTypeName() const = 0;
    // Get the type id of the underlying data type.
    virtual TypeId GetTypeId() const = 0;
-+  virtual const void * const GetRaw() const = 0; // UMP
++  virtual const void * const GetRaw() const = 0; // GMP
+ 
    // Downcasts this to Holder<T>.  Returns nullptr if deserialization
    // failed or if the requested type is not what is stored.
-   template <typename T>
-@@ -507,6 +510,7 @@ class Holder : public HolderBase {
-     return *ptr_;
-   }
+@@ -511,6 +514,7 @@ class Holder : public HolderBase, private HolderPayloadRegistrator<T> {
+   ~Holder() override { delete_helper(); }
+   const T& data() const { return *ptr_; }
    TypeId GetTypeId() const final { return kTypeId<T>; }
-+  const void * const GetRaw() const final { return &data(); } // UMP
++  const void * const GetRaw() const final { return &data(); } // GMP
    // Releases the underlying data pointer and transfers the ownership to a
    // unique pointer.
    // This method is dangerous and is only used by Packet::Consume() if the
-@@ -760,6 +764,8 @@ inline const T& Packet::Get() const {
+@@ -765,6 +769,8 @@ inline const T& Packet::Get() const {
  
  inline Timestamp Packet::Timestamp() const { return timestamp_; }
  
-+inline const void * const Packet::GetRaw() const { return holder_->GetRaw(); } // UMP
++inline const void * const Packet::GetRaw() const { return holder_->GetRaw(); } // GMP
 +
  template <typename T>
  Packet Adopt(const T* ptr) {
-   CHECK(ptr != nullptr);
+   ABSL_CHECK(ptr != nullptr);
 diff --git a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
 index fead2456..e3e4230a 100644
 --- a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
@@ -417,6 +402,3 @@ index 84458554..afc37009 100644
      ],
      linkopts = [
          "-l:libopencv_core.so",
--- 
-2.40.1
-
