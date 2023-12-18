@@ -27,8 +27,8 @@ void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool g
 
     // Add callback functions
     // Face Landmarks
-    _observers[0]->SetPresenceCallback([](class IObserver* observer, bool present){});
-    _observers[0]->SetPacketCallback([this](class IObserver* observer){ 
+    _observers[0]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
+    _observers[0]->SetPacketCallback([this](class mcl::IObserver* observer){ 
         const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
         for(int i=0; i<468; i++){
             this->_data[i][0] = data->landmark(0).x();
@@ -37,17 +37,17 @@ void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool g
         }
     });
     // Pose Landmarks
-    _observers[1]->SetPresenceCallback([](class IObserver* observer, bool present){});
-    _observers[1]->SetPacketCallback([](class IObserver* observer){ });
+    _observers[1]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
+    _observers[1]->SetPacketCallback([](class mcl::IObserver* observer){ });
     // Left Hand Landmarks
-    _observers[2]->SetPresenceCallback([](class IObserver* observer, bool present){});
-    _observers[2]->SetPacketCallback([](class IObserver* observer){ });
+    _observers[2]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
+    _observers[2]->SetPacketCallback([](class mcl::IObserver* observer){ });
     // Right Hand Landmarks
-    _observers[3]->SetPresenceCallback([](class IObserver* observer, bool present){});
-    _observers[3]->SetPacketCallback([](class IObserver* observer){ });
+    _observers[3]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
+    _observers[3]->SetPacketCallback([](class mcl::IObserver* observer){ });
     // Pose World Landmarks
-    // _observers[2]->SetPresenceCallback([](class IObserver* observer, bool present){});
-    // _observers[2]->SetPacketCallback([](class IObserver* observer){ });
+    // _observers[2]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
+    // _observers[2]->SetPacketCallback([](class mcl::IObserver* observer){ });
 }
 
 void Holistic::Start(){

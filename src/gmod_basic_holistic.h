@@ -13,9 +13,9 @@ class Holistic : public IHolistic
         virtual std::vector<std::vector<float>>* GetData() override;
         std::vector<std::vector<float>> _data;
     private:
-        GMOD* _gmod;
+        mcl::GMOD* _gmod;
         bool _gpu;
-        std::vector<IObserver*> _observers;
+        std::vector<mcl::IObserver*> _observers;
 };
 
 } // namespace mcl_basic
