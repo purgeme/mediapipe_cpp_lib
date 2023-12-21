@@ -1,3 +1,16 @@
+diff --git a/WORKSPACE b/WORKSPACE
+index 922b2c10..bb84107e 100644
+--- a/WORKSPACE
++++ b/WORKSPACE
+@@ -316,7 +316,7 @@ http_archive(
+ new_local_repository(
+     name = "linux_opencv",
+     build_file = "@//third_party:opencv_linux.BUILD",
+-    path = "/usr",
++    path = "/usr/local",
+ )
+ 
+ new_local_repository(
 diff --git a/mediapipe/examples/desktop/demo_run_graph_main.cc b/mediapipe/examples/desktop/demo_run_graph_main.cc
 index b2e5ae30..15d62df8 100644
 --- a/mediapipe/examples/desktop/demo_run_graph_main.cc
@@ -382,23 +395,17 @@ index e4b4e7cc..ae87c1e6 100644
            }
          }
 diff --git a/third_party/opencv_linux.BUILD b/third_party/opencv_linux.BUILD
-index 84458554..afc37009 100644
+index 84458554..a877544c 100644
 --- a/third_party/opencv_linux.BUILD
 +++ b/third_party/opencv_linux.BUILD
-@@ -18,14 +18,14 @@ cc_library(
-         #"include/aarch64-linux-gnu/opencv4/opencv2/cvconfig.h",
-         #"include/arm-linux-gnueabihf/opencv4/opencv2/cvconfig.h",
-         #"include/x86_64-linux-gnu/opencv4/opencv2/cvconfig.h",
--        #"include/opencv4/opencv2/**/*.h*",
-+        "include/opencv4/opencv2/**/*.h*",
-     ]),
-     includes = [
-         # For OpenCV 4.x
-         #"include/aarch64-linux-gnu/opencv4/",
-         #"include/arm-linux-gnueabihf/opencv4/",
-         #"include/x86_64-linux-gnu/opencv4/",
--        #"include/opencv4/",
-+        "include/opencv4/",
+@@ -28,6 +28,10 @@ cc_library(
+         #"include/opencv4/",
      ],
      linkopts = [
++        "-L/usr/local/lib",
++        "-l:libopencv_core.so",
++        "-l:libopencv_core.so",
++        "-l:libopencv_core.so",
          "-l:libopencv_core.so",
+         "-l:libopencv_calib3d.so",
+         "-l:libopencv_features2d.so",
