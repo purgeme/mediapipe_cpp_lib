@@ -12,7 +12,7 @@ project_dir = os.path.join(current_dir, '..')
 graphs_src = os.path.join(project_dir, "mediapipe_graphs")
 graphs_dst = os.path.join(current_dir, "mediapipe_graphs")
 
-api_src = os.path.join(project_dir, "src", "gmod_api.h")
+api_src = os.path.join(project_dir, "src", "mcl_api.h")
 api_dst = os.path.join(current_dir, "gmod_api.h")
 
 models_src = os.path.join(project_dir, "mediapipe_models")
@@ -77,7 +77,7 @@ copy2dir(import_files_src, import_files_dst)
 print("Copied import files!")
 
 # Build project
-build_cmd = ['g++','-o','demo','demo.cpp','-I./protobuf/src/','-L../library/','-lgmod']
+build_cmd = ['g++','-o','demo','demo.cpp','-I./protobuf/src/', '-L../library/','-lmcl','-Wl,-rpath,../library/']
 if subprocess.run(build_cmd).returncode != 0:
     print("Error building demo!")
     quit()

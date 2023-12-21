@@ -13,7 +13,7 @@ DLLEXPORT void hello();
 
 namespace mcl_basic {
 
-DLLEXPORT class IHolistic 
+DLLEXPORT class ITracking
 {
     public:
         virtual void Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu) = 0;
@@ -22,7 +22,8 @@ DLLEXPORT class IHolistic
         virtual std::vector<std::vector<float>>* GetData() = 0;
 };
 
-DLLEXPORT IHolistic* CreateHolistic();
+DLLEXPORT ITracking* CreateHolistic();
+DLLEXPORT ITracking* CreateFaceLandmark();
 
 } // namespace mcl_basic
 

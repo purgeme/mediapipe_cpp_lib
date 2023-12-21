@@ -4,7 +4,7 @@ package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
     name = "mcl",
-    srcs = ["mcl_api.h", "mcl_core.cc", "mcl_core.h", "mcl_basic_holistic.cc", "mcl_basic_holistic.h"],
+    srcs = ["mcl_api.h", "mcl_core.cc", "mcl_core.h", "mcl_basic_holistic.cc", "mcl_basic_holistic.h", "mcl_basic_facelandmark.cc", "mcl_basic_facelandmark.h"],
     deps = [
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",

@@ -10,10 +10,10 @@ void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool g
     _mcl->set_camera(true);
     _mcl->set_overlay(true);
     _mcl->set_gpu(gpu);
+    _gpu = gpu;
 
     // Set camera props
     _mcl->set_camera_props(cam_id, cam_resx, cam_resy, cam_fps);
-    _gpu = gpu;
 
     // Create observers
     _observers.push_back(_mcl->create_observer("face_landmarks"));
@@ -102,7 +102,7 @@ std::vector<std::vector<float>>* Holistic::GetData(){
     return &_data;
 }
 
-IHolistic* CreateHolistic(){
+ITracking* CreateHolistic(){
     return new Holistic();
 }
 

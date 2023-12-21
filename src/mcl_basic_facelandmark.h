@@ -4,7 +4,7 @@
 
 namespace mcl_basic {
 
-class Holistic : public ITracking
+class FaceLandmark : public ITracking
 {
     public:
         virtual void Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu) override;
