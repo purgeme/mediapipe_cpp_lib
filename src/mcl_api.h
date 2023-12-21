@@ -37,13 +37,15 @@ DLLEXPORT class IObserver
         virtual const void* const GetData()=0;
 };
 
-DLLEXPORT class IGMOD
+DLLEXPORT class IMCL
 {
     public:
         virtual bool get_camera() = 0;
         virtual void set_camera(bool x) = 0;
         virtual bool get_overlay() = 0;
         virtual void set_overlay(bool x) = 0;
+        virtual bool get_gpu() = 0;
+        virtual void set_gpu(bool x) = 0;
 
         virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) = 0;
 
@@ -55,6 +57,6 @@ DLLEXPORT class IGMOD
         virtual void stop() = 0;
 };
 
-DLLEXPORT IGMOD* CreateGMOD();
+DLLEXPORT IMCL* CreateMCL();
 
 } // namespace mcl

@@ -12,7 +12,7 @@ packet_src = os.path.join(current_dir, "patch", "packet.h")
 packet_dst = os.path.join(mediapipe_dir, "mediapipe", "framework", "packet.h")
 
 library_files_src = os.path.join(current_dir, "src")
-library_files_dst = os.path.join(mediapipe_dir, "cpp_library")
+library_files_dst = os.path.join(mediapipe_dir, "mcl")
 
 patch_path = os.path.join(current_dir, "patch")
 patch_file = open(patch_path, "rb")

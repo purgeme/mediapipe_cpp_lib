@@ -1,6 +1,6 @@
 #pragma once
 
-#include "gmod_core.h"
+#include "mcl_core.h"
 
 namespace mcl_basic {
 
@@ -14,7 +14,7 @@ class Holistic : public IHolistic
 
 
     private:
-        std::unique_ptr<mcl::GMOD> _gmod;
+        std::unique_ptr<mcl::MCL> _mcl;
         bool _gpu;
         std::vector<std::shared_ptr<mcl::IObserver>> _observers;
         std::vector<std::vector<float>> _data;

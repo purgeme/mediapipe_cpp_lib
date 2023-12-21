@@ -9,18 +9,18 @@ current_dir = os.path.dirname(__file__)
 mediapipe_dir = os.path.join(current_dir, 'mediapipe')
 
 if platform.system() == 'Windows':
-    library_name = 'gmod.dll'
+    library_name = 'mcl.dll'
 else:
-    library_name = 'libgmod.so'
+    library_name = 'libmcl.so'
 
-library_src = os.path.join(mediapipe_dir, 'bazel-bin', 'cpp_library')
+library_src = os.path.join(mediapipe_dir, 'bazel-bin', 'mcl')
 library_dst = os.path.join(current_dir, 'library')
 
 import_files_src = os.path.join(mediapipe_dir, 'bazel-bin', 'mediapipe')
 import_files_dst = os.path.join(current_dir, 'import_files')
 
 build_prefix = ['bazel', 'build', '-c', 'opt'] 
-build_suffix = ['cpp_library:gmod']
+build_suffix = ['mcl:mcl']
 build_options = []
 build_cmd = []
 

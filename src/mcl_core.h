@@ -7,7 +7,7 @@
 #include<memory>
 #include<thread>
 
-#include "gmod_api.h"
+#include "mcl_api.h"
 #include "absl/flags/flag.h"
 #include "absl/flags/parse.h"
 #include "mediapipe/framework/calculator_framework.h"
@@ -19,12 +19,16 @@
 #include "mediapipe/framework/port/opencv_video_inc.h"
 #include "mediapipe/framework/port/parse_text_proto.h"
 #include "mediapipe/framework/port/status.h"
-
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/landmark.pb.h"
 
-namespace mcl {
+#ifdef ENABLE_GPU
+    #include "mediapipe/gpu/gl_calculator_helper.h"
+    #include "mediapipe/gpu/gpu_buffer.h"
+    #include "mediapipe/gpu/gpu_shared_data_internal.h"
+#endif
 
+namespace mcl {
 
 class Observer : public IObserver
 {
@@ -77,43 +81,46 @@ class Observer : public IObserver
         bool _presence = false;
 };
 
-class GMOD : public IGMOD
+class MCL : public IMCL
 {
-public:
-    virtual bool get_camera() override;
-    virtual void set_camera(bool x) override;
-    virtual bool get_overlay() override;
-    virtual void set_overlay(bool x) override;
+    public:
+        virtual bool get_camera() override;
+        virtual void set_camera(bool x) override;
+        virtual bool get_overlay() override;
+        virtual void set_overlay(bool x) override;
+        virtual bool get_gpu() override;
+        virtual void set_gpu(bool x) override;
 
-    virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) override;
+        virtual void set_camera_props(int cam_id, int cam_resx, int cam_resy, int cam_fps) override;
 
-    virtual std::shared_ptr<IObserver> create_observer(const char* stream_name) override;
+        virtual std::shared_ptr<IObserver> create_observer(const char* stream_name) override;
 
-    virtual bool is_loaded() override;
+        virtual bool is_loaded() override;
 
-    virtual void start(const char* filename) override;
-    virtual void stop() override;
+        virtual void start(const char* filename) override;
+        virtual void stop() override;
 
-private:
-    void _workerThread();
-    void _shutMPPGraph();
-    absl::Status _runMPPGraph();
+    private:
+        void _workerThread();
+        void _shutMPPGraph();
+        absl::Status _runMPPGraph();
 
-private:
-    int _cam_id;
-    int _cam_resx;
-    int _cam_resy;
-    int _cam_fps;
-    bool _show_camera;
-    bool _show_overlay;
-    std::string _graph_filename;
+    private:
+        int _cam_id;
+        int _cam_resx;
+        int _cam_resy;
+        int _cam_fps;
+        bool _show_camera;
+        bool _show_overlay;
+        bool _enable_gpu;
+        std::string _graph_filename;
 
-    std::unique_ptr<std::thread> _worker;
-    std::atomic<bool> _run_flag;
-    std::atomic<bool> _load_flag;
+        std::unique_ptr<std::thread> _worker;
+        std::atomic<bool> _run_flag;
+        std::atomic<bool> _load_flag;
 
-    std::list<std::shared_ptr<Observer>> _observers;
-    std::shared_ptr<mediapipe::CalculatorGraph> _graph;
+        std::list<std::shared_ptr<Observer>> _observers;
+        std::shared_ptr<mediapipe::CalculatorGraph> _graph;
 
 };
 

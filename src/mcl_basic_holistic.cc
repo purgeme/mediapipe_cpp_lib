@@ -1,24 +1,25 @@
-#include "gmod_basic_holistic.h"
+#include "mcl_basic_holistic.h"
 
 namespace mcl_basic {
 
 void Holistic::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu){ // pass the camera properties
 
-    // Create IGMOD
-    _gmod = std::make_unique<mcl::GMOD>();
+    // Create IMCL
+    _mcl = std::make_unique<mcl::MCL>();
 
-    _gmod->set_camera(true);
-    _gmod->set_overlay(true);
+    _mcl->set_camera(true);
+    _mcl->set_overlay(true);
+    _mcl->set_gpu(gpu);
 
     // Set camera props
-    _gmod->set_camera_props(cam_id, cam_resx, cam_resy, cam_fps);
+    _mcl->set_camera_props(cam_id, cam_resx, cam_resy, cam_fps);
     _gpu = gpu;
 
     // Create observers
-    _observers.push_back(_gmod->create_observer("face_landmarks"));
-    _observers.push_back(_gmod->create_observer("pose_landmarks"));
-    _observers.push_back(_gmod->create_observer("left_hand_landmarks"));
-    _observers.push_back(_gmod->create_observer("right_hand_landmarks"));
+    _observers.push_back(_mcl->create_observer("face_landmarks"));
+    _observers.push_back(_mcl->create_observer("pose_landmarks"));
+    _observers.push_back(_mcl->create_observer("left_hand_landmarks"));
+    _observers.push_back(_mcl->create_observer("right_hand_landmarks"));
 
     _data.resize(543);
     for(int i=0; i<543; i++) _data.at(i).resize(3);
@@ -72,7 +73,7 @@ void Holistic::Start(){
         file.open("mediapipe_graphs/holistic_tracking/holistic_tracking_gpu.pbtxt");
         if(file.is_open()){
             file.close();
-            _gmod->start("mediapipe_graphs/holistic_tracking/holistic_tracking_gpu.pbtxt");
+            _mcl->start("mediapipe_graphs/holistic_tracking/holistic_tracking_gpu.pbtxt");
         }
         else {
             std::cout << "Error: ";
@@ -83,7 +84,7 @@ void Holistic::Start(){
         file.open("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
         if(file.is_open()){
             file.close();
-            _gmod->start("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
+            _mcl->start("mediapipe_graphs/holistic_tracking/holistic_tracking_cpu.pbtxt");
         }
         else {
             std::cout << "Error: ";
@@ -94,7 +95,7 @@ void Holistic::Start(){
 }
 
 void Holistic::Stop(){
-    _gmod->stop();
+    _mcl->stop();
 }
 
 std::vector<std::vector<float>>* Holistic::GetData(){

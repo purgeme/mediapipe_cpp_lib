@@ -3,8 +3,8 @@ licenses(["notice"])
 package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
-    name = "gmod",
-    srcs = ["gmod_api.h", "gmod_core.cc", "gmod_core.h", "gmod_basic_holistic.cc", "gmod_basic_holistic.h"],
+    name = "mcl",
+    srcs = ["mcl_api.h", "mcl_core.cc", "mcl_core.h", "mcl_basic_holistic.cc", "mcl_basic_holistic.h"],
     deps = [
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
@@ -40,7 +40,7 @@ cc_binary(
         "//mediapipe/framework/port:status",
         "//mediapipe/framework/port:logging",
         "//mediapipe/framework/port:map_util",
-            "//mediapipe/util:resource_util",
+        "//mediapipe/util:resource_util",
 
         ":face_detection_calculators",
         ":face_mesh_calculators",
@@ -67,7 +67,13 @@ cc_binary(
             "//mediapipe/gpu:image_frame_to_gpu_buffer_calculator",
         ],
     }),
-    linkopts = ["-Wl,-soname,libgmod.so"],
+    copts = select({
+        "//mediapipe/gpu:disable_gpu": [],
+        "//conditions:default": [
+            "-D ENABLE_GPU",
+        ],
+    }),
+    linkopts = ["-Wl,-soname,libmcl.so"],
     linkshared = True,
 )
 
@@ -100,7 +106,8 @@ cc_library(
 
 cc_library(
     name = "face_mesh_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/face_mesh:desktop_live_calculators",
         ],
@@ -112,7 +119,8 @@ cc_library(
 
 cc_library(
     name = "iris_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/modules/iris_landmark:iris_landmark_cpu",
             "//mediapipe/graphs/iris_tracking:iris_tracking_cpu_deps",
@@ -126,7 +134,8 @@ cc_library(
 
 cc_library(
     name = "hands_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/hand_tracking:desktop_tflite_calculators",
         ],
@@ -138,7 +147,8 @@ cc_library(
 
 cc_library(
     name = "pose_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/pose_tracking:pose_tracking_cpu_deps",
         ],
@@ -150,7 +160,8 @@ cc_library(
 
 cc_library(
     name = "holistic_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/holistic_tracking:holistic_tracking_cpu_graph_deps",
         ],
@@ -162,7 +173,8 @@ cc_library(
 
 cc_library(
     name = "selfie_segmentation_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/selfie_segmentation:selfie_segmentation_cpu_deps",
         ],
@@ -174,7 +186,8 @@ cc_library(
 
 cc_library(
     name = "hair_segmentation_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/hair_segmentation:desktop_calculators",
         ],
@@ -186,7 +199,8 @@ cc_library(
 
 cc_library(
     name = "object_detection_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/object_detection:desktop_tflite_calculators",
         ],
@@ -198,7 +212,8 @@ cc_library(
 
 cc_library(
     name = "box_tracking_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/tracking:desktop_calculators",
         ],
@@ -210,7 +225,8 @@ cc_library(
 
 cc_library(
     name = "instant_motion_tracking_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/instant_motion_tracking/subgraphs:region_tracking_cpu",
         ],
@@ -222,7 +238,8 @@ cc_library(
 
 cc_library(
     name = "objectron_calculators",
-    deps = select({
+    deps = [
+    ] + select({
         "//mediapipe/gpu:disable_gpu": [
             "//mediapipe/graphs/object_detection_3d:desktop_cpu_calculators",
         ],
