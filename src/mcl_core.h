@@ -21,6 +21,7 @@
 #include "mediapipe/framework/port/status.h"
 #include "mediapipe/framework/calculator_framework.h"
 #include "mediapipe/framework/formats/landmark.pb.h"
+#include "mediapipe/framework/formats/detection.pb.h"
 
 #ifdef ENABLE_GPU
     #include "mediapipe/gpu/gl_calculator_helper.h"

@@ -24,6 +24,7 @@ DLLEXPORT class ITracking
 
 DLLEXPORT ITracking* CreateHolistic();
 DLLEXPORT ITracking* CreateFaceLandmark();
+DLLEXPORT ITracking* CreateFaceDetection();
 
 } // namespace mcl_basic
 

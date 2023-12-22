@@ -4,7 +4,17 @@ package(default_visibility = ["//mediapipe/examples:__subpackages__"])
 
 cc_binary(
     name = "mcl",
-    srcs = ["mcl_api.h", "mcl_core.cc", "mcl_core.h", "mcl_basic_holistic.cc", "mcl_basic_holistic.h", "mcl_basic_facelandmark.cc", "mcl_basic_facelandmark.h"],
+    srcs = [
+        "mcl_api.h", 
+        "mcl_core.cc", 
+        "mcl_core.h", 
+        "mcl_basic_holistic.cc", 
+        "mcl_basic_holistic.h", 
+        "mcl_basic_facelandmark.cc", 
+        "mcl_basic_facelandmark.h", 
+        "mcl_basic_facedetection.cc", 
+        "mcl_basic_facedetection.h"
+    ],
     deps = [
         "@com_google_absl//absl/flags:flag",
         "@com_google_absl//absl/flags:parse",
@@ -32,6 +42,7 @@ cc_binary(
         "//mediapipe/framework/formats:image_frame",
         "//mediapipe/framework/formats:image_frame_opencv",
         "//mediapipe/framework/formats:landmark_cc_proto",
+        "//mediapipe/framework/formats:detection_cc_proto",
         "//mediapipe/framework/port:file_helpers",
         "//mediapipe/framework/port:opencv_highgui",
         "//mediapipe/framework/port:opencv_imgproc",

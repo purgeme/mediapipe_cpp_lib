@@ -18,8 +18,8 @@ void FaceLandmark::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bo
     // Create observers
     _observers.push_back(_mcl->create_observer("face_landmarks"));
 
-    _data.resize(543);
-    for(int i=0; i<543; i++) _data.at(i).resize(3);
+    _data.resize(468);
+    for(int i=0; i<468; i++) _data.at(i).resize(3);
 
     // Add callback functions
     // Face Landmarks
