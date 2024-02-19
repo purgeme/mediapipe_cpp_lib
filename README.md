@@ -1,3 +1,8 @@
+# Status
+Though I have been working on this project locally on my machine, Mediapipe is changing solutions to a new way to execute solutions, they are now "Tasks". It will take a lot of time to understand the code and create a wrapper around the new tasks, which are as I understand going to allow customizing models as well with a mediapipe model maker. This adds more complexity so for now I am putting work on this repo to a pause.
+
+---
+
 # MediapipeModule_library
 
 This project provides a C++ dynamic library which allows use of mediapipe solutions in any other C++ project.
