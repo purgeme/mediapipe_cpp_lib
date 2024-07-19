@@ -41,7 +41,9 @@ print("Downloading protobuf...")
 if os.path.isfile(os.path.join(current_dir, "protobuf-cpp-"+protobuf_version+".zip")):
     print("Protobuf is already downloaded!")
 else:
+    print("Downloading it")
     response = requests.get("https://github.com/protocolbuffers/protobuf/releases/download/v"+protobuf_version+"/protobuf-cpp-"+protobuf_version+".zip")
+    print("Downloaded")
     file = open("protobuf-cpp-"+protobuf_version+".zip", "wb")
     file.write(response.content)
     file.close()
@@ -77,7 +79,8 @@ copy2dir(import_files_src, import_files_dst)
 print("Copied import files!")
 
 # Build project
-build_cmd = ['g++','-o','demo','demo.cpp','-I./protobuf/src/', '-L../library/','-lmcl','-Wl,-rpath,../library/']
+build_cmd = ['g++','-g', '-o','demo','demo.cpp','-I./protobuf/src/', '-L../library/','-lmcl','-Wl,-rpath,../library/']
+# build_cmd = ['g++','-o','demo','demo.cpp','-L../library/','-lmcl','-Wl,-rpath,../library/']
 if subprocess.run(build_cmd).returncode != 0:
     print("Error building demo!")
     quit()
@@ -85,5 +88,6 @@ if subprocess.run(build_cmd).returncode != 0:
 print("Demo built successfully!")
 
 inp = input ("Do you want to run the demo? [n/Y]: ")
-if inp != "n" or inp != "N":
+
+if inp.lower() != "n":
     subprocess.run(["./demo"])
