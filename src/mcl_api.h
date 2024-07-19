@@ -19,7 +19,6 @@ DLLEXPORT class ITracking
         virtual void Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu) = 0;
         virtual void Start() = 0;
         virtual void Stop() = 0;
-        virtual std::vector<std::vector<float>>* GetData() = 0;
 };
 
 DLLEXPORT ITracking* CreateHolistic();

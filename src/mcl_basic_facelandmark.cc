@@ -16,20 +16,26 @@ void FaceLandmark::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bo
     _mcl->set_camera_props(cam_id, cam_resx, cam_resy, cam_fps);
 
     // Create observers
-    _observers.push_back(_mcl->create_observer("face_landmarks"));
+    _observers.push_back(_mcl->create_observer("multi_face_landmarks"));
 
-    _data.resize(468);
-    for(int i=0; i<468; i++) _data.at(i).resize(3);
+    _data.resize(1);
+    // _data.resize(478);
+    // for(int i=0; i<478; i++) _data.at(i).resize(3);
 
     // Add callback functions
     // Face Landmarks
     _observers[0]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
     _observers[0]->SetPacketCallback([this](class mcl::IObserver* observer){ 
-        const mediapipe::NormalizedLandmarkList* data = (mediapipe::NormalizedLandmarkList*)(observer->GetData()); 
-        for(int i=0; i<468; i++){
-            this->_data[i][0] = data->landmark(0).x();
-            this->_data[i][1] = data->landmark(1).y();
-            this->_data[i][2] = data->landmark(2).z();
+        const std::vector<mediapipe::NormalizedLandmarkList>* data = (std::vector<mediapipe::NormalizedLandmarkList>*)(observer->GetData()); 
+        this->_data.resize(data->size());
+        for(int j=0; j<data->size(); j++){
+            this->_data[j].resize(478);
+            for(int i=0; i<478; i++){
+                _data[j][i].resize(3);
+                this->_data[0][i][0] = data->at(0).landmark(0).x();
+                this->_data[0][i][1] = data->at(0).landmark(0).y();
+                this->_data[0][i][2] = data->at(0).landmark(0).z();
+            }
         }
     });
 }
@@ -65,7 +71,7 @@ void FaceLandmark::Stop(){
     _mcl->stop();
 }
 
-std::vector<std::vector<float>>* FaceLandmark::GetData(){
+std::vector<std::vector<std::vector<float>>>* FaceLandmark::GetData(){
     return &_data;
 }
 

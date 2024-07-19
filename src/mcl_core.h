@@ -45,6 +45,7 @@ class Observer : public IObserver
             {
                 _presence = pk.Get<bool>();
 
+
                 if( _presence_callback){
                     _presence_callback(this, _presence);
                 }

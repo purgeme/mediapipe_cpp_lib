@@ -23,15 +23,18 @@ void FaceDetection::Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, b
     _data.at(1).resize(4);
 
     // Add callback functions
-    // Face Landmarks
+    // Face bounding box coords
     _observers[0]->SetPresenceCallback([](class mcl::IObserver* observer, bool present){});
     _observers[0]->SetPacketCallback([this](class mcl::IObserver* observer){ 
         const std::vector<mediapipe::Detection>* data = (std::vector<mediapipe::Detection>*)(observer->GetData()); 
-        this->_data[0][0] = data->size();
-        this->_data[1][0] = data->at(0).location_data().relative_bounding_box().xmin();
-        this->_data[1][1] = data->at(0).location_data().relative_bounding_box().ymin();
-        this->_data[1][2] = data->at(0).location_data().relative_bounding_box().width();
-        this->_data[1][3] = data->at(0).location_data().relative_bounding_box().height();
+        this->_data.resize(data->size());
+        for(int i=0; i<data->size(); i++){
+            this->_data[i].resize(4);
+            this->_data[i][0] = data->at(i).location_data().relative_bounding_box().xmin();
+            this->_data[i][0] = data->at(i).location_data().relative_bounding_box().ymin();
+            this->_data[i][0] = data->at(i).location_data().relative_bounding_box().width();
+            this->_data[i][0] = data->at(i).location_data().relative_bounding_box().height();
+        }
     });
 }
 

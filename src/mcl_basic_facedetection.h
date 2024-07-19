@@ -10,7 +10,7 @@ class FaceDetection : public ITracking
         virtual void Setup(int cam_id, int cam_resx, int cam_resy, int cam_fps, bool gpu) override;
         virtual void Start() override;
         virtual void Stop() override;
-        virtual std::vector<std::vector<float>>* GetData() override;
+        std::vector<std::vector<float>>* GetData();
 
 
     private:
