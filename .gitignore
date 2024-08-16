@@ -7,3 +7,5 @@ library/
 demo/*
 !demo/demo.cpp
 !demo/demo.py
+
+venv/

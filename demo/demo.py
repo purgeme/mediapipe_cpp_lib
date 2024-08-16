@@ -13,7 +13,7 @@ graphs_src = os.path.join(project_dir, "mediapipe_graphs")
 graphs_dst = os.path.join(current_dir, "mediapipe_graphs")
 
 api_src = os.path.join(project_dir, "src", "mcl_api.h")
-api_dst = os.path.join(current_dir, "gmod_api.h")
+api_dst = os.path.join(current_dir, "mcl_api.h")
 
 models_src = os.path.join(project_dir, "mediapipe_models")
 models_dst = os.path.join(current_dir, "mediapipe_models")

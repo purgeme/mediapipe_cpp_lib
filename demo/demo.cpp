@@ -3,7 +3,6 @@
 #include<typeinfo>
 
 #include "mcl_api.h"
-#include "mediapipe/framework/formats/landmark.pb.h"
 
 int main(){
 
