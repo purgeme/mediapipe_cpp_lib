@@ -1,43 +1,44 @@
 diff --git a/mediapipe/framework/packet.h b/mediapipe/framework/packet.h
-index 1024cbc1..169b7d12 100644
+index d5cc8700..bf193257 100644
 --- a/mediapipe/framework/packet.h
 +++ b/mediapipe/framework/packet.h
-@@ -190,6 +190,8 @@ class Packet {
+@@ -215,6 +215,9 @@ class Packet {
    // Crashes if IsEmpty() == true.
    TypeId GetTypeId() const;
  
-+  const void* const GetRaw() const;
++  const void* const GetRaw() const; // MCL
++
 +
    // Returns the timestamp.
    class Timestamp Timestamp() const;
  
-@@ -373,6 +375,9 @@ class HolderBase {
-   virtual const std::string RegisteredTypeName() const = 0;
+@@ -401,6 +404,8 @@ class HolderBase {
    // Get the type id of the underlying data type.
    virtual TypeId GetTypeId() const = 0;
-+
+ 
 +  virtual const void* const GetRaw() const = 0; // MCL
 +
    // Downcasts this to Holder<T>.  Returns nullptr if deserialization
    // failed or if the requested type is not what is stored.
    template <typename T>
-@@ -506,6 +511,8 @@ class Holder : public HolderBase {
-     return *ptr_;
-   }
+@@ -511,6 +516,8 @@ class Holder : public HolderBase, private HolderPayloadRegistrator<T> {
+   ~Holder() override { delete_helper(); }
+   const T& data() const { return *ptr_; }
    TypeId GetTypeId() const final { return kTypeId<T>; }
 +  const void * const GetRaw() const final { return &data(); } // MCL
 +
    // Releases the underlying data pointer and transfers the ownership to a
    // unique pointer.
    // This method is dangerous and is only used by Packet::Consume() if the
-@@ -758,6 +765,7 @@ inline const T& Packet::Get() const {
- }
+@@ -765,6 +772,8 @@ inline const T& Packet::Get() const {
  
  inline Timestamp Packet::Timestamp() const { return timestamp_; }
-+inline const void* const Packet::GetRaw() const { return holder_->GetRaw(); } // MCL
  
++inline const void* const Packet::GetRaw() const { return holder_->GetRaw(); } // MCL
++
  template <typename T>
  Packet Adopt(const T* ptr) {
+   ABSL_CHECK(ptr != nullptr);
 diff --git a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt b/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
 index fead2456..e3e4230a 100644
 --- a/mediapipe/graphs/holistic_tracking/holistic_tracking_cpu.pbtxt
